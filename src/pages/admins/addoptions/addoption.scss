@@ -1,0 +1,35 @@
+.modal-footer1{
+    display: flex !important;
+    width: 200px;
+    margin-left: 55%;
+    justify-content: space-between;
+    button{
+        width: 40% !important;
+   
+    }
+    .savebutton{
+        // background-color: black;
+        color: #167a2c;
+        height: 40px;
+        margin-top: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: end;
+        background-color: #fff;
+    }
+    .loading-spinner{
+        color: black;
+    }
+}
+
+.modal-body{
+    padding: 25px;
+    input{
+        width: 100%;
+        border: 1px solid rgb(190, 182, 182);
+        padding: 7px;
+    }
+}
+.form-group{
+    padding: 10px 25px;
+}

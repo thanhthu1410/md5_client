@@ -1,0 +1,56 @@
+.container-nav{
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    background-color: #fff;
+    .nav-top{
+        background-color: rgb(20, 11, 11);
+        color: aliceblue;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        p{
+            margin-bottom: 0;
+            padding: 5px 10px;
+        }
+        .nav-top-right{
+            span{
+                margin-right: 10px;
+                padding-right: 20px;
+                 border-right: 2px solid #fff;
+            }
+        }
+    }
+    .nav-bt{
+        padding: 0 20px ;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .logo{
+            width: 80px;
+            img{
+                width: 100%;
+            }
+        }
+        .nav-title{
+            font-family: "FuturaPT-Book";
+            display: flex;
+            width: 30%;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 20px;
+            p{
+                margin-bottom: 0;
+                cursor: pointer;
+            }
+            
+        }
+        .nav-icon{
+            width: 13%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+}

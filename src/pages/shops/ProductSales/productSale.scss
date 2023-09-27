@@ -1,0 +1,80 @@
+.categories{
+   
+    .container{
+        .title_sale{
+            font-weight: 400;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+            position: relative;
+            border-bottom: 1px solid;
+            margin: 50px;
+           .title_sale_icon{ 
+                padding: 8px 15px;
+                position: absolute;
+                top : -47px;
+                background-color: #fff;
+                left: 40%;
+                font-weight: 400;
+            }
+        }
+        .categories__slider{
+          
+            margin-top: 35px;
+            width: 100%;
+            height: 260px;
+    
+            .sale_carou{
+                width: 100%;
+                .sale_carou_chirl{
+                    position: relative;
+                    height: 80%;
+                    background-color: red($color: #000000);
+                    .off{
+                        position: absolute;
+                        background-color: black;
+                        color: #fff;
+                        padding: 4px;
+                        left: 30%;
+                        top: 10px;
+                    }
+                    img{
+                        padding-top: 10px;
+                        width: 75%;
+                        height: 220px;
+                        border-radius: 25% 25% 0% 0%;
+                        opacity: 1;
+                        display: block;
+                        transition: .5s ease;
+                        backface-visibility: hidden;
+                    }
+                    .sale_carou_title{
+                            
+                            background-color: rgb(221, 215, 221);
+                            width: 100px;
+                            transition: .5s ease;
+                            opacity: 0;
+                            position: absolute;
+                            top: 50%;
+                            left: 40%;
+                            transform: translate(-50%, -50%);
+                            -ms-transform: translate(-50%, -50%);
+                            text-align: center;
+                          
+                    }
+                }
+                .sale_carou_chirl:hover .image{
+                    opacity: 0.3;
+
+                }
+                .sale_carou_chirl:hover .sale_carou_title{
+                    opacity: 1;
+
+                }
+            }
+        }
+
+    }
+
+}

@@ -1,0 +1,80 @@
+.update-product {
+    border: 1px solid black;
+    width: 30%;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    background-color: #fff;
+    background: #fff;
+    padding: 30px;
+
+    .product-image {
+        img {
+            width: 200px;
+            background: #fff;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+
+        input {
+            outline: none;
+            border: 1px solid black;
+            border-radius: 4px;
+            padding: 7px;
+            width: 100%;
+        }
+
+        select {
+            border: 1px solid black;
+            padding: 7px;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        textarea {
+            border: 1px solid black;
+            padding: 7px;
+            border-radius: 4px;
+            outline: none;
+        }
+    }
+
+    .save-button {
+        background-color: black;
+        color: #fff;
+        padding: 7px 20px;
+        border-radius: 4px;
+    }
+}
+
+.update-product.open {
+    display: block;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.update-product {
+    /* ... */
+    transition: transform 0.9s ease;
+    /* Thêm transition */
+}
+
+// .update-product.open {
+//     transform: translateX(0%);
+//     /* Hiển thị modal */
+// }
+
+// .update-product.closed {
+//     transform: translateX(100%);
+//     /* Ẩn modal đi bên phải */
+// }

@@ -1,0 +1,46 @@
+.about{
+    .about-bn{
+        position: relative;
+        .about-title{
+            position: absolute;
+            top: 15%;
+            left: 30%;
+            width: 40%;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            p{
+                font-size: 1.1rem;
+            }
+        }
+    }
+    .about-content{
+        margin-top: 40px;
+        .about-item{
+            display: flex;
+            justify-content: space-evenly;
+            img{
+                width: 20%;
+                border-radius: 12px;
+                // height: 300px;
+            }
+            .content-detail{
+                width: 40%;
+            }
+        }
+        .about-last{
+            padding: 40px 0;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-evenly;
+            img{
+                border-radius: 12px;
+                width: 30%;
+            }
+        }
+    }
+}

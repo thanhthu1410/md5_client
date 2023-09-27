@@ -1,0 +1,46 @@
+.container-listproduct{
+    padding-top: 50px;
+    width: 90%;
+  
+    margin: 0 auto;
+    min-height: 90vh;
+    .adm-title{
+        padding: 10px;
+        margin-bottom: 20px;
+        background-color: #dacdcd;
+        cursor: pointer;
+        .title-list{
+            font-weight: 550;
+        }
+    }
+    .item-img{
+        img{
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+    }
+    .item-desc{
+        width:32%;
+    }
+   .fa-pen-to-square{
+    padding-left: 10%;
+    cursor: pointer;
+   }
+}
+
+.pagination {
+    position: relative;
+    margin-left: 700px;
+}
+
+table {
+    tbody {
+        position: relative;
+        .loading-wrapper {
+            position: absolute;
+            margin-left: 50%;
+            margin-top: 20%;
+        }
+    }
+}

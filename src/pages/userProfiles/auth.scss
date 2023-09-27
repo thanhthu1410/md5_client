@@ -1,0 +1,81 @@
+.btn-secondary{
+    background-color: #fff !important;
+    margin-top: 45px;
+}
+.ripple-surface{
+    border: none !important;
+}
+.content_change{
+    display: flex;
+   
+    .content_right{
+        margin: 30px;
+ 
+    }
+}
+.card-body{
+    height: 420px;
+}
+
+.error {
+    color: red !important;
+    font-size: 14px;
+}
+.loading-spinner {
+    margin-top: 10px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #ffffff;
+    animation: spin 1s infinite linear;
+  }
+  
+  @keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+  
+    100% {
+        transform: rotate(360deg);
+    }
+  }
+  .changeInfo{
+    display: flex;
+    .content_left{
+        display: flex;
+        flex-direction: column;
+        height: 350px;
+        width: 40%;
+        justify-content: center;
+        align-items: center;
+        img{
+            width: 40%;
+            height: 50%;
+            border-radius: 50%;
+
+        }
+    }
+  }
+
+  .changeAva{
+    padding: 5px 18px;
+    margin-top: 20px;
+    background-color: black;
+    color: #fff;
+    border-radius: 8px;
+    border: 1px solid;
+  }
+  .changeAva:hover{
+    background-color: #fff;
+    color: black;
+    // border: 1px solid;
+  }
+  .imgbn{
+    height: 150px;
+    width: 100%;
+  }
+  .img-fluid{
+    width: 60% !important; 
+  }

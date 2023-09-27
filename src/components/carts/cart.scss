@@ -1,0 +1,102 @@
+.title-cart {
+
+    h5 {
+      	font-family: "Cairo", sans-serif;
+	-webkit-font-smoothing: antialiased;
+        font-weight: 400;
+        font-style: normal;
+        line-height: 1.4em;
+        color: #6a5b5c;
+        margin: 0 0 0.7em;
+        padding: 0;
+        font-size: 25px;
+    }
+}
+
+.offcanvasCart {
+    width: 600px !important;
+}
+.checkoutA{
+    cursor: pointer;
+    margin: 0 auto;
+    background-color: rgb(127, 173, 57);
+    color: #fff;
+    // height: 20px;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 7px;
+    margin-top: 20px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+.checkoutA:hover{
+    background-color: rgb(113, 175, 19) ;
+    color: #fff;
+    // border: 1px solid rgb(120, 179, 33);
+}
+.loading-wrapper-cart{
+    // height: 300px;
+    position: absolute;
+    // top: -150px;
+}
+.containerCartDetail{
+    position: relative;
+}
+.click_cart{
+    position: relative;
+    box-shadow: none;
+    .quantityInCart{
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color:  rgb(113, 175, 19);
+        position: absolute;
+        top: 0px;
+        left: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-weight: 550;
+        font-size: 13px;
+    }
+    
+}
+.click_cart:hover{
+    box-shadow: none;
+}
+.fa-shopping-bag{
+    font-size: 1.05rem;
+}
+.final-checkout{
+    border-top: 1px solid grey;
+    .noteA{
+        padding-top: 20px;
+        display: flex;
+        p{
+            padding: 0 5px 0 35px;
+        }
+        .textarea{
+            border: 1px solid grey;
+        }
+    }
+    .total-container{
+        padding: 20px 35px;
+        display: flex;
+        justify-content: space-between;
+        .total{
+            font-size: 1.3rem;
+        }
+    }
+    .checkout-btn{
+        width: 70%;
+        margin: 0 auto;
+        margin-left: 15%;
+        padding: 10px;
+        border-radius: 12px;
+        background: -webkit-linear-gradient(left, #656563, #0a0808);
+        color: #fff;
+    }
+}

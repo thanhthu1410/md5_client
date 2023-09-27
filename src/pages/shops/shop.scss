@@ -1,0 +1,48 @@
+.shop{
+   
+    .shop-banner{
+        height: 220px;
+        width: 100%;
+        position: relative;
+        img{
+            height: 100%;
+            width: 100%;
+        }
+        .banner-title{
+            position: absolute;
+            top: 30%;
+            color: #fff;
+            width: 40%;
+            left: 30%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+    .shop-content{
+        border-top: 1px solid rgb(238, 230, 230);
+        margin-top: 15px;
+        display: flex;
+        .content-left{
+            width: 20%;
+            
+            .left-chirld{
+                padding: 10px 20px;
+            }
+            .left-video{
+                padding-top: 55px ;
+                width: 100%;
+                .video{
+                    width: 100%;
+                }
+            }
+        }
+        .content-right{
+
+            width: 80%;
+            background-color: rgb(255, 252, 252);
+        }
+    }
+}

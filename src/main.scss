@@ -1,0 +1,169 @@
+*{ 
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    box-sizing: border-box;
+    font-family: s;
+}
+.btn-94,
+.btn-94 *,
+.btn-94 :after,
+.btn-94 :before,
+.btn-94:after,
+.btn-94:before {
+  border: 0 solid;
+  box-sizing: border-box;
+}
+.btn-94 {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: button;
+  background-color: #000;
+  background-image: none;
+  color: #423131;
+  cursor: pointer;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-size: 100%;
+  font-weight: 900;
+  line-height: 1.5;
+  margin: 0;
+  -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+  text-transform: uppercase;
+}
+.btn-94:disabled {
+  cursor: default;
+}
+.btn-94:-moz-focusring {
+  outline: auto;
+}
+.btn-94 svg {
+  vertical-align: middle;
+}
+.btn-94 [hidden] {
+  display: none;
+}
+.btn-94 {
+  background: hsla(0, 0%, 100%, 0.2);
+  background-clip: content-box;
+  border: 5px solid;
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: block;
+  height: 100px;
+  -webkit-mask-image: none;
+  padding: 0;
+  position: relative;
+  transition: 0.2s;
+  width: 100px;
+}
+.btn-94 svg {
+  --size: 50px;
+  fill: #771111;
+  display: block;
+  height: var(--size);
+  left: calc(50% - var(--size) / 2);
+  position: absolute;
+  top: calc(50% - var(--size) / 2);
+  width: var(--size);
+}
+.btn-94:hover {
+  --size: 70px;
+  border: 10px solid transparent;
+}
+
+
+.btn-52,
+.btn-52 *,
+.btn-52 :after,
+.btn-52 :before,
+.btn-52:after,
+.btn-52:before {
+  border: 0 solid;
+  box-sizing: border-box;
+}
+.btn-52 {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: button;
+  background-color: #000;
+  background-image: none;
+  color: #fff;
+  cursor: pointer;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-size: 100%;
+  line-height: 1.5;
+  margin: 0;
+  -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+  padding: 0;
+}
+.btn-52:disabled {
+  cursor: default;
+}
+.btn-52:-moz-focusring {
+  outline: auto;
+}
+.btn-52 svg {
+  display: block;
+  vertical-align: middle;
+}
+.btn-52 [hidden] {
+  display: none;
+}
+.btn-52 {
+  margin-top: 35px;
+  border: 1px solid;
+  border-radius: 12px;
+  box-sizing: border-box;
+  display: block;
+  font-weight: 700;
+  overflow: hidden;
+  padding: 0.8rem 4rem;
+  position: relative;
+  text-transform: uppercase;
+}
+.btn-52 .original {
+  background: #0e0909;
+  color: #fff;
+  display: grid;
+  inset: 0;
+  place-content: center;
+  position: absolute;
+  transition: transform 0.2s;
+}
+.btn-52:hover .original {
+  transform: translateY(100%);
+}
+.btn-52 .letters {
+  display: inline-flex;
+}
+.btn-52 span {
+  opacity: 0;
+  transform: translateY(-15px);
+  transition: transform 0.2s, opacity 0.2s;
+}
+.btn-52:hover span {
+  opacity: 1;
+  transform: translateY(0);
+}
+.btn-52:hover span:nth-child(2) {
+  transition-delay: 0.1s;
+}
+.btn-52:hover span:nth-child(3) {
+  transition-delay: 0.2s;
+}
+.btn-52:hover span:nth-child(4) {
+  transition-delay: 0.3s;
+}
+.btn-52:hover span:nth-child(5) {
+  transition-delay: 0.4s;
+}
+.btn-52:hover span:nth-child(6) {
+  transition-delay: 0.5s;
+}
+.btn-52:hover span:nth-child(7) {
+  transition-delay: 0.6s;
+}
+

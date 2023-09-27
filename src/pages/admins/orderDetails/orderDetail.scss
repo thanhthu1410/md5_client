@@ -1,0 +1,133 @@
+.orderDetail-wrapper {
+    padding: 30px;
+
+    .title {
+        font-size: 0.9rem;
+        color: #9fa0ad;
+    }
+
+    .dashboard,
+    .order {
+        color: #c3c4cc;
+
+        &:hover {
+            text-decoration: underline;
+            color: #2f40d6;
+        }
+    }
+
+    .orders-admin-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 30px 0px;
+
+        .orders-title {
+            display: flex;
+            align-items: center;
+
+            h2 {
+                font-size: 2rem;
+                margin-right: 10px;
+            }
+
+            span {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid #bfc8cf;
+                color: #aaabb7;
+            }
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            border: 1px solid #2f40d6;
+            color: #2f40d6;
+            border-radius: 4px;
+            height: 40px;
+            padding: 0px 20px;
+
+            .create-text {
+                font-size: 0.9rem;
+            }
+
+            &:hover {
+                background-color: #eeeff7;
+            }
+
+            &:hover>.create-text {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    table {
+        width: 100%;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        background-color: #fff;
+        font-size: 0.9rem;
+        margin-top: 20px;
+
+        th,
+        td {
+            padding: 10px;
+        }
+
+        thead {
+            border-bottom: 1px solid #bfc8cf;
+        }
+
+        tbody {
+            position: relative;
+
+            .material-symbols-outlined {
+                cursor: pointer;
+            }
+
+            tr {
+                border-bottom: 1px solid #bfc8cf;
+            }
+
+            .orderProductDetail {
+                img {
+                    width: 50px;
+                }
+
+                .show {
+                    opacity: 1;
+                }
+
+                .name {
+                    width: 300px;
+                }
+
+                .date {
+                    width: 200px;
+                }
+            }
+
+            .loading-wrapper {
+                position: absolute;
+                margin-left: 50%;
+                margin-top: 20%;
+            }
+
+
+        }
+    }
+
+    .pagination {
+        position: relative;
+        margin-left: 500px;
+    }
+
+
+
+}
