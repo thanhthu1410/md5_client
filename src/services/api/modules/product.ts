@@ -16,7 +16,10 @@ export default {
     })
   },
   findMany: async () => {
-    return await axios.get(import.meta.env.VITE_SERVER_HOST_API + "products")
+    return await axios.get(import.meta.env.VITE_SERVER_HOST_API + "products/search")
+  },
+  findAll: async function (take: number, skip: number) {
+    return await axios.get(`${import.meta.env.VITE_SERVER_HOST_API}products?take=${take}&skip=${skip}`);
   },
   findByCategoryId: async (categoryId: string) => {
     return await axios.get(import.meta.env.VITE_SERVER_HOST_API + "products/listProduct/" + categoryId)
@@ -25,6 +28,9 @@ export default {
     return await axios.get(import.meta.env.VITE_SERVER_HOST_API + "products/" + id)
   },
   search: async (keysearch: string) => {
-    return await axios.get(import.meta.env.VITE_SERVER_HOST_API + `products?search=${keysearch}`)
+    return await axios.get(import.meta.env.VITE_SERVER_HOST_API + `products/search?search=${keysearch}`)
+  },
+  updateOption: async (id: string,data: any) => {
+    return await axios.patch(import.meta.env.VITE_SERVER_HOST_API + "product-options/" + id,data)
   },
 }

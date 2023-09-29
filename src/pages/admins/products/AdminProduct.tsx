@@ -39,6 +39,11 @@ export default function AdminProduct() {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [productData, setProductData] = useState(null);
+
+  // bang update
+  const [openModalUpdate,setOpenModalUpdate] = useState(false)
+  const [isOpenUpdate,setIsOpenUpdate] = useState(false)
+ 
   const navigate = useNavigate();
   const productStore = useSelector((store: StoreType) => store.productStore)
   
@@ -46,50 +51,50 @@ export default function AdminProduct() {
     console.log("productStore", productStore);
 
   }, [])
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   api.productApi.findAll(maxItemPage, skipItem)
-  //     .then(res => {
-  //       if (res.status == 200) {
-  //         // console.log("res.data", res.data)
-  //         let maxPageArr: any[] = [];
-  //         for (let i = 0; i < res.data.maxPage; i++) {
-  //           maxPageArr.push({
-  //             number: Number(i) + 1,
-  //             skip: res.data.data.length * Number(i)
-  //           })
-  //         }
-  //         setMaxPage(maxPageArr);
-  //         setSkipItem(res.data.data.length)
-  //         setProducts(res.data.data)
-  //       }
-  //     })
-  //     .catch(err => {
+  useEffect(() => {
+    setIsLoading(true);
+    api.product.findAll(maxItemPage, skipItem)
+      .then(res => {
+        if (res.status == 200) {
+          // console.log("res.data", res.data)
+          let maxPageArr: any[] = [];
+          for (let i = 0; i < res.data.maxPage; i++) {
+            maxPageArr.push({
+              number: Number(i) + 1,
+              skip: res.data.data.length * Number(i)
+            })
+          }
+          setMaxPage(maxPageArr);
+          setSkipItem(res.data.data.length)
+          setProducts(res.data.data)
+        }
+      })
+      .catch(err => {
 
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false); // Kết thúc loading
-  //     });
-  // }, [])
+      })
+      .finally(() => {
+        setIsLoading(false); // Kết thúc loading
+      });
+  }, [productStore.reLoad])
 
-  // function changePage(pageItemObj: any) {
-  //   api.productApi.findAll(maxItemPage, pageItemObj.skip)
-  //     .then(res => {
-  //       if (res.status == 200) {
-  //         console.log("res.data", res.data)
-  //         let maxPageArr: any[] = [];
-  //         for (let i = 0; i < res.data.maxPage; i++) {
-  //           maxPageArr.push({
-  //             number: Number(i) + 1,
-  //             skip: res.data.data.length * Number(i)
-  //           })
-  //         }
-  //         setMaxPage(maxPageArr);
-  //         setSkipItem(res.data.data.length)
-  //         setProducts(res.data.data)
-  //       }
-  //     })
-  // }
+  function changePage(pageItemObj: any) {
+    api.product.findAll(maxItemPage, pageItemObj.skip)
+      .then(res => {
+        if (res.status == 200) {
+          console.log("res.data", res.data)
+          let maxPageArr: any[] = [];
+          for (let i = 0; i < res.data.maxPage; i++) {
+            maxPageArr.push({
+              number: Number(i) + 1,
+              skip: res.data.data.length * Number(i)
+            })
+          }
+          setMaxPage(maxPageArr);
+          setSkipItem(res.data.data.length)
+          setProducts(res.data.data)
+        }
+      })
+  }
 
 
   return (
@@ -105,7 +110,7 @@ export default function AdminProduct() {
               <th scope="col">Avatar</th>
               <th scope="col">Name </th>
               <th scope="col">Price</th>
-              <th scope="col">Option</th>
+           
               <th scope="col">Option</th>
               <th scope="col">Description</th>
               <th scope="col">Update </th>
@@ -118,20 +123,23 @@ export default function AdminProduct() {
                 <span className="visually-hidden">Loading...</span>
               </div>
             </div> :
-              productStore.data?.map((item: any, index: number) => (
+              products?.map((item: any, index: number) => (
                 <tr key={Math.random() * Date.now()}>
                   <th scope="row">{index}</th>
                   <td className='item-img'><img src={(item as Product).productOptions[0]?.product_option_picture[0].picture} alt="" /></td>
                   <td className='item-name'>{(item as Product).name}</td>
                   <td>{(item as Product).price}</td>
-                  <td className='item-desc'>{(item as Product).desc}.</td>
+          
                   <td>{(item as Product).productOptions?.length}</td>
                   <td onClick={() => {
                     setProductData(item);
                     setIsOpenModal(true);
                   }}
                   >Add Option</td>
-                  <td>Update</td>
+                  <td onClick={() => {
+                    setProductData(item);
+                    setOpenModalUpdate(true);
+                  }}>Update</td>
                 </tr>
               ))}
           </tbody>
@@ -143,13 +151,13 @@ export default function AdminProduct() {
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-            {/* {
+            {
               maxPage.map(item => {
                 return (
                   <li key={Math.random() * Date.now()} className="page-item"><a className="page-link" href="#" onClick={() => changePage(item)}>{item.number}</a></li>
                 )
               })
-            } */}
+            }
             <li className="page-item">
               <a className="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
@@ -158,6 +166,7 @@ export default function AdminProduct() {
           </ul>
         </nav>
         {isOpenModal && productData && <UpdateOption product={productData} setIsOpenModal={setIsOpenModal} isOpenModal={isOpenModal} />}
+        {openModalUpdate &&  productData && <UpdateProduct setOpenModalUpdate={setOpenModalUpdate} product={productData} setIsOpenUpdate={setIsOpenUpdate}/>}
       </div>
 
     </div>

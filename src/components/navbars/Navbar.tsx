@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./navbar.scss"
 import Search from '../search/Search'
 import Cart from '../carts/Cart'
@@ -17,8 +17,8 @@ export default function Navbar() {
       window.location.href = "/"
     }
     const userStore = useSelector((store: StoreType)  => store.userStore)
-    console.log("userstore",userStore);
-    
+
+  
     return (
         <div className='container-nav'>
             <div className='nav-top'>
@@ -40,7 +40,7 @@ export default function Navbar() {
                 <div className='logo'><img src="https://media.istockphoto.com/id/1290057225/vector/house-icon-and-interior-design-with-lamp-drawer-shelf-home-furniture-illustration-stock.jpg?s=612x612&w=0&k=20&c=5XylIIzgjxIOj4WaPLY994Vdwa_FHGyQhvLUxLwUjy4=" alt="" /></div>
                 <div className='nav-title'>
                     <p onClick={()=>navigate("/")}>{t('home')}</p>
-                    <p onClick={()=>navigate("/shop")}>{t('shop')}</p>
+                    <p onClick={()=>navigate("/shop/1")}>{t('shop')}</p>
                     <p onClick={()=>navigate("/")}>{t('new')}</p>
                  
                     <p onClick={()=>navigate("/about")}>{t('abouts')}</p>
@@ -48,7 +48,7 @@ export default function Navbar() {
                 <div className='nav-icon'>
                     <Search/>
                     <Cart/>
-                   <Dropdown/>
+                   <Dropdown />
                 </div>
             </div>
         </div>

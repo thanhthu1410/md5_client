@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux';
 export default function ProfilePage() {
 
   const userStore = useSelector((store : StoreType)=> store.userStore)
-  const[email,setEmail] = useState(userStore?.data?.email ?? "")
+  const[email,setEmail] = useState(userStore.data?.email ?? "")
   useEffect(()=>{
       console.log("userStore",userStore);
       setEmail(userStore?.data?.email)
@@ -30,20 +30,21 @@ export default function ProfilePage() {
 
     // const email = userStore?.data?.email;
   
-    const hideMiddleChars = (email: any) => {
-      const parts = email.split('@');
-      const username = parts[0];
-      const domain = parts[1];
+     function hideMiddleChars  (email: any)  {
   
-      if (username.length > 4) {
-        const visiblePart = username.slice(0, 2);
-        const hiddenPart = '*'.repeat(username.length - 4);
-        return `${visiblePart}${hiddenPart}${username.slice(-3)}@${domain}`;
-      }
-  
-      return email;
+        const parts =  email.split('@');
+        const username = parts[0];
+        const domain = parts[1];
+        if (username.length > 4) {
+          const visiblePart = username.slice(0, 2);
+          const hiddenPart = '*'.repeat(username.length - 4);
+          return `${visiblePart}${hiddenPart}${username.slice(-3)}@${domain}`;
+        }
+        return email;
+     
+      
     };
-    let hiddenEmail = hideMiddleChars(email);
+    // let hiddenEmail = hideMiddleChars(email);
 
   return (
     <div>
@@ -91,7 +92,8 @@ export default function ProfilePage() {
                   <MDBCardText>Email</MDBCardText>
                 </MDBCol>
                 <MDBCol sm="9">
-                  <MDBCardText className="text-muted">{hiddenEmail}</MDBCardText>
+                  {/* <MDBCardText className="text-muted">{hiddenEmail}</MDBCardText> */}
+                  <MDBCardText className="text-muted">{userStore.data?.email}</MDBCardText>
                 </MDBCol>
               </MDBRow>
               <hr />     

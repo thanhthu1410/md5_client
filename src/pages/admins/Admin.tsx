@@ -23,7 +23,7 @@ export default function Admin() {
         <div className="sidebar">
           <div className="logo">
             <img src="img/logo.png" alt="logo" />
-            <h2>VEGETABLES</h2>
+            <h2>FURNITURE</h2>
           </div>
           <ul className="links">
           <h4 onClick={()=> window.location.href = "/"}>HomePage </h4>

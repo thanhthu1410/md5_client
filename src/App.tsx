@@ -2,34 +2,84 @@
 import { useEffect, useState } from 'react';
 import RouteSetup from './routes/RouteSetup';
 import api from './services/api';
-import { useDispatch } from "react-redux";
-import { userAction } from './stores/slice/user';
+import { useDispatch, useSelector } from "react-redux";
+import { Receipt, User, userAction } from './stores/slice/user';
 import { Modal, message } from 'antd';
 import ChatBox from './components/chatbox/ChatBox';
 import { categoryAction } from './stores/slice/categories';
 import { productAction } from './stores/slice/product';
+import { StoreType } from './stores';
+import { Socket, io } from 'socket.io-client';
 
 export default function App() {
   const dispatch = useDispatch();
   const [openChat, setOpenChat] = useState(false);
+  const store = useSelector((store: StoreType) => store)
+  // useEffect(()=>{
+  //   if(localStorage.getItem("token")){
+  //     api.users.authencation()
+  //     .then(res => {
+  //       console.log("res", res)
+  //       if(res.status == 200){
+  //           dispatch(userAction.setLoginData(res.data.data))
+  //       }
+  //       if (res.status == 213) {
+  //         localStorage.removeItem("token");
+  //       //  window.location.href = "/"
+  //       }
+  //     })
+  //     .catch(err => console.log("err",err))
+  //   }
+    
+  // },[])
   useEffect(()=>{
-    if(localStorage.getItem("token")){
-      api.users.authencation()
-      .then(res => {
-        console.log("res", res)
-        if(res.status == 200){
-          console.log("userlogin",res.data.data);
-            dispatch(userAction.setLoginData(res.data.data))
-        }
-        if (res.status == 213) {
-          localStorage.removeItem("token");
-        //  window.location.href = "/"
-        }
-      })
-      .catch(err => console.log("err",err))
+      if(!store.userStore.data){
+         let token = localStorage.getItem("token");
+         if(token) {
+          let socket: Socket = io("http://localhost:3001",{
+            query:{
+              token
+            }
+           })
+           socket.on("connectStatus",(data: {status: boolean, message: string}) => {
+            console.log(data.message)
+          })
+          socket.on("disconnect",()=>{
+            dispatch(userAction.setLoginData(null))
+          })
+          socket.on("receiveUserData",(user: User)=>{
+              dispatch(userAction.setLoginData(user))
+          })
+          socket.on("receiveReceipt", (receipts: Receipt[]) => {
+            dispatch(userAction.setReceipt(receipts))
+           })
+  
+          socket.on("receiveCart", (cart: Receipt) => {
+          dispatch(userAction.setCart(cart))
+          })
+           dispatch(userAction.setSocket(socket))
+         }
+       
+      }
+  },[store.userStore.reLoad])
+
+useEffect(()=>{
+  store.userStore.socket?.on("connectStatus",(data: {status: boolean, message: string}) => {
+    if(data.status){
+       console.log(data.message)
+        
+    }else{
+      console.log(data.message)
     }
     
-  },[])
+
+  })
+},[store.userStore.socket])
+
+useEffect(()=>{
+  console.log("userStore",store.userStore);
+  
+},[store.userStore.data])
 
   useEffect(()=>{
     api.categories.findMany()
@@ -47,7 +97,7 @@ export default function App() {
           dispatch(productAction.setData(res.data.data))
       }
     })
-  },[])
+  },[store.productStore.reLoad])
   return (
     <div>
        {
@@ -75,8 +125,8 @@ export default function App() {
         ></path>
     </svg>
 </button>
-        : <div style={{width: "400px", position: "fixed", right: 0, bottom: 0}}>
-          <ChatBox open={openChat}/>
+        : <div style={{width: "400px", position: "fixed", right: 0, bottom: 0, zIndex: 999}}>
+          <ChatBox open={openChat} setOpenChat={setOpenChat}/>
         </div>
       }
       

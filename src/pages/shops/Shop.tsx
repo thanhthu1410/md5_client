@@ -30,9 +30,11 @@ export default function Shop() {
         </div>
         <div className="shop-content">
             <div className="content-left">
+            <h4 className="categories-title">List Categories</h4>
                 <div className="left-chirld">
+                  
                     {
-                        categoryStore?.data?.map((category : Categories) =>   <h4 onClick={()=> navigate(`/shop/${category.id}`)}>- {category.title} </h4>)
+                        categoryStore?.data?.map((category : Categories) =>   <h4 key={Math.random() * Date.now()} onClick={()=> navigate(`/shop/${category.id}`)}><img className="arow-icon" src="/images/icons.png"/> {category.title} </h4>)
                     }
                    
                 </div>

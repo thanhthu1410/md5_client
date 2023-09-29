@@ -31,6 +31,8 @@ export default function UpdateOption(props: UpdateOptionProp) {
     const openModal = () => {
         props.setIsOpenModal(true);
     }
+    
+    
     // async function updateProduct(eventForm: any) {
     //     eventForm.preventDefault();
     //     let updateInfor = {
@@ -99,7 +101,7 @@ export default function UpdateOption(props: UpdateOptionProp) {
                             </div>
                             <div className="modal-body">
                                 <label htmlFor="">Option title:</label> <br />
-                                <input type="text" name='option' id='option' />
+                                <input type="text" className='inputtitle' placeholder='Enter option title...' name='option' id='option' />
 
                             </div>
                             <div className='form-group'>
@@ -139,7 +141,7 @@ export default function UpdateOption(props: UpdateOptionProp) {
                                     Close
                                 </button>
 
-                                <button type='submit' className='savebutton'>
+                                <button type='submit' className='savebutton btn btn-secondary'>
                                     {loading ? <span className='loading-spinner'></span> : "Save"}
                                 </button>
                             </div>

@@ -167,3 +167,29 @@
   transition-delay: 0.6s;
 }
 
+.save-button {
+  background-color: black;
+  color: #fff;
+  padding: 7px 30px;
+  border-radius: 5px;
+}
+.loading-spinner {
+  margin-top: 10px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  0% {
+      transform: rotate(0deg);
+  }
+
+  100% {
+      transform: rotate(360deg);
+  }
+}

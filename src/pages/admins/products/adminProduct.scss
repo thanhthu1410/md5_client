@@ -42,5 +42,13 @@ table {
             margin-left: 50%;
             margin-top: 20%;
         }
+        .item-desc{
+            padding: 15px;
+            width: 50%;
+            height: 10px !important;
+            overflow-y: scroll !important;
+        
+        }
     }
 }
+

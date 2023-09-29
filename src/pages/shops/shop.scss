@@ -1,4 +1,5 @@
 .shop{
+    font-family: s;
    
     .shop-banner{
         height: 220px;
@@ -26,13 +27,20 @@
         margin-top: 15px;
         display: flex;
         .content-left{
-            width: 20%;
+            width: 16%;
             
             .left-chirld{
-                padding: 10px 20px;
+                padding: 10px 15px;
+                h4{
+                    padding-bottom: 10px;
+                    display: flex;
+                    justify-content: left;
+                    align-items: center;
+                    cursor: pointer;
+                }
             }
             .left-video{
-                padding-top: 55px ;
+                padding-top: 0px ;
                 width: 100%;
                 .video{
                     width: 100%;
@@ -41,8 +49,19 @@
         }
         .content-right{
 
-            width: 80%;
+            width: 84%;
             background-color: rgb(255, 252, 252);
         }
+        
     }
+}
+.categories-title{
+    background-color: black;
+    color: #fff;
+    width: 100%;
+    padding: 7px 10px;
+}
+.arow-icon{
+    width: 21px;
+    margin-right: 10px;
 }

@@ -80,11 +80,11 @@ export default function AddProduct() {
     return (
         <div className='addProduct-container'>
             <nav>
-                <ol className='addProduct-nav'>
+                <ul className='addProduct-nav'>
                     <li onClick={() => navigate("/admin")}>Admin /</li>
                     <li className='add-title'>Add Product </li>
 
-                </ol>
+                </ul>
             </nav>
             <h2>Add new product</h2>
             <form

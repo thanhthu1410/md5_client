@@ -5,7 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import api from "../../services/api/index"
 import ResetPassword from '../resetPasswods/ResetPasswordModal';
-const LoginSignin: React.FC = () => {
+import { useDispatch } from 'react-redux';
+import { userAction } from '@/stores/slice/user';
+interface Props{
+  handleClose: any
+}
+const LoginSignin = (props: Props) => {
+  const dispatch = useDispatch()
 
   const { t } = useTranslation()
   const [loading, setLoading] = useState(false);
@@ -79,7 +85,9 @@ const LoginSignin: React.FC = () => {
     }
     const confirmPass = e.target.confirmpassword.value
     if (newUser.password !== confirmPass) {
-      message.error("Incorect Confirm Password ! ")
+      message.error({content: "Incorect Confirm Password ! ",
+        className : "custom-message"
+        })
       setLoading(false)
       return;
     }
@@ -88,13 +96,16 @@ const LoginSignin: React.FC = () => {
       .then(res => {
         console.log("res", res)
         if (res.status == 200) {
-          message.success(res.data.message)
+          message.success({content: res.data.message,
+            className : "custom-message1"
+            })
           handleLoginClick()
 
         }
         if(res.response.status == 400) {
           if (Array.isArray(res.response.data.message)) {
-            message.warning(res.response.data.message[0])
+            message.warning({content: res.response.data.message[0],
+            className : "custom-message"})
             setLoading(false)
           }else{
             message.warning("Username or Email is already exist")
@@ -121,13 +132,23 @@ const LoginSignin: React.FC = () => {
      .then(res => {
       console.log("res",res);
       if(res.status == 200){
-        message.success("Login Successfull !")
+        message.success({
+          content: 'Login Successfull !',
+          className: 'custom-message'
+        })
+        
         localStorage.setItem("token",res.data.token);
+        dispatch(userAction.reload())
+        
         setTimeout(()=>{
-            window.location.href = "/"
+            props.handleClose()
+            
         },1500)
+    
       }else{
-        message.warning(res.response.data.message)
+        message.warning({content :res.response.data.message,
+        className: "custom-message"})
+        setLoading(false)
       }
       setLoading(false);
      }

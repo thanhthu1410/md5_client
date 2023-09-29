@@ -3,20 +3,30 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface ProductState {
     data: any
+    reLoad : boolean
 }
 
 const initialState: ProductState = { 
-    data: null
+    data: null,
+    reLoad: false
+
 }
 
 const productSlice = createSlice({
     name: "product",
     initialState,
     reducers: {
-        setData : (state : ProductState,action ) => {
+        setData : (state,action ) => {
+            return {   
+                ...state,
+                data : action.payload             
+            }
+        },
+        reload: (state) => {
             return {
-               
-                data : action.payload
+                ...state,
+                reLoad: !state.reLoad,
+
             }
         }
     }

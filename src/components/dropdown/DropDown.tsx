@@ -4,20 +4,22 @@ import {Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LoginMoldal from '../logins/ModalLogin';
 import { Popconfirm } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { StoreType } from '@/stores';
+import { userAction } from '@/stores/slice/user';
 
 
 export default function Dropdown() {
     const { t } = useTranslation();
-    const[checkLogin,setCheckLogin] = useState(localStorage.getItem("token") ?? "")
-  
-  
+    const userStore = useSelector((store: StoreType)  => store.userStore)
+    const dispatch = useDispatch()
    function hanldeLogOut(){
     localStorage.removeItem('token');
-    setTimeout(()=>{
-        window.location.href = "/"
-    },1500)
+    userStore.socket?.disconnect()
+ 
    
    }
+ 
     
     return (
         <div className="dropdown">
@@ -30,7 +32,7 @@ export default function Dropdown() {
             >
                 <i className="fa fa-user" />
             </button>
-            {checkLogin == "" ? <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">         
+            {!userStore.data ? <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">         
                 <li>  
                        <LoginMoldal/>                   
                 </li>

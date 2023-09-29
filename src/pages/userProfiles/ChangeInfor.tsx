@@ -1,41 +1,44 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 // import { Modal as md } from 'antd'; // thông báo andtd
 import "./auth.scss"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { StoreType } from '../../stores';
 import api from '../../services/api';
 import {  message } from 'antd';
+import { userAction } from '@/stores/slice/user';
 
 function Example() {
+    const dispatch = useDispatch();
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [loading, setLoading] = useState(false);
-    const userStore = useSelector((store : StoreType)=> store.userStore)
-    const[upAvatar,setUpAvatar] = useState("")
+    const userStore = useSelector((store : StoreType) => store.userStore)
+    const[user,setUser] = useState(userStore.data)
+    const[upAvatar,setUpAvatar] = useState([])
+    useEffect(() => {
+
+    },[])
     async function update(eventForm: any) {
 
         eventForm.preventDefault();
-
         let newData = {
             user_name: eventForm.target.user_name.value,
-            last_name: eventForm.target.last_name.value,
-       
         }
-
         try {
             setLoading(true);
             let result = await api.users.updateProfile(newData);
             setLoading(false);
             if (result.status == 200) {
-                message.success( `${result.data.message}, Please Login !!`)
+                handleClose()
+                message.success( `Update Information Successfull !!`)
               
                         setTimeout(()=>{
-                            localStorage.removeItem("token");
-                            window.location.href = "/login";
-                        },1500)
+                            localStorage.setItem("token", result.data.token);
+                            dispatch(userAction.setLoginData(result.data.data))
+                        },2000)
             } else {
                message.warning(`${result.data.message}, vui lòng thử lại!`)
             }
@@ -48,20 +51,26 @@ function Example() {
 
     async function updateAvatar() {
 
-        // if (upAvatar.length > 0) {
-        //     (document.querySelector('.input_img_preview')as HTMLImageElement).src = URL.createObjectURL(upAvatar[0]);
-        // }
+        if (upAvatar.length > 0) {
+            (document.querySelector('.input_img_preview')as HTMLImageElement).src = URL.createObjectURL(upAvatar[0]);
+        }
 
         try {
-            if(upAvatar !== ""){       
+            if(upAvatar.length > 0){       
                 let formData = new FormData();
                 formData.append('avatar', upAvatar[0]);
                 setLoading(true);
                 let result = await api.users.updateAvatar(formData);
+                console.log("resule",result)
+                
                 
                 setLoading(false);
                 if (result.status == 200) {
+                handleClose()
+                message.success( `Update Avatar Successfull!`)
                  localStorage.setItem("token", result.data.token);
+                 dispatch(userAction.setLoginData(result.data.data))
+                 
     
                 } else {
                     console.log("errr nek");
@@ -96,12 +105,12 @@ function Example() {
                 <Modal.Body>
                     {<div className='changeInfo'>
                         <div className='content_left'>
-                                        <img className='input_img_preview' src={userStore?.data?.avatar} alt="" />
-                                        <input type="file" onChange={(e: any) => {
+                                        <img className='input_img_preview' src={userStore.data?.avatar} alt="" />
+                                        <input  type="file" onChange={(e: any) => {
                                             console.log("e", e.target.files);
                                             setUpAvatar(e.target.files);
                                         }} className='input_btn' />
-                                        {loading ? <span className='loading-spinner'></span>  : <button className='changeAva' onClick={()=>updateAvatar()}>Change Avatar</button> }
+                                        {loading ? <button> <span className='loading-spinner changeAva'></span></button>  : <button className='changeAva' onClick={()=>updateAvatar()}>Change Avatar</button> }
                                        
                                     </div>
                         <form  onSubmit={(e) => {
@@ -111,7 +120,7 @@ function Example() {
                                    
                                     <div className='content_right'>
                                         <label htmlFor="">User_name: </label>
-                                        <input type="text" name='user_name' defaultValue={userStore?.data?.user_name} style={{ border: "1px solid black", width: "500px", color: "black", borderRadius: "8px", padding: "10px", margin: "5px" }} /><br/>
+                                        <input type="text" name='user_name' defaultValue={userStore.data?.user_name} style={{ border: "1px solid black", width: "500px", color: "black", borderRadius: "8px", padding: "10px", margin: "5px" }} /><br/>
                                         <label htmlFor="">Email : </label>
                                         <input type="text" name='first_name' defaultValue={"username"} style={{ border: "1px solid black", width: "500px", color: "black", borderRadius: "8px", padding: "10px", margin: "5px" }} /><br/>
                                         <label htmlFor="">Address : </label>

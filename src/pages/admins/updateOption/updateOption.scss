@@ -69,6 +69,27 @@
     /* Thêm transition */
 }
 
+.modal-footer1{
+    display: flex;
+    button{
+        border: 1px solid black;
+        margin: 20px;
+        font-size: 1.2rem;
+    }
+    .savebutton{
+        color: green;
+    }
+
+}
+.inputtitle{
+    width: 100%;
+    border: 1px solid grey;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 6px;
+
+}
+
 // .update-product.open {
 //     transform: translateX(0%);
 //     /* Hiển thị modal */

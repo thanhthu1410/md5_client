@@ -56,15 +56,15 @@ export default function Product() {
     <div className="product">
       <div className="product-banner">
         <img src="/images/product.webp" alt="" />
-        <p className="title">
+        <div className="title">
           <h3>Comfortable</h3>
           <p>From 2-seaters for cosy apartment living to L-shaped sectionals for family movie nights, we’ve got just what you need. Find the lounge piece you’re looking for with soft, cloud-like options.</p>
-        </p>
+        </div>
       </div>
       <div className="product-content">
         <div className="list-img">
           {product?.productOptions[selectedOption].product_option_picture.map((item: any, index: number) => (
-            <img src={item.picture} alt="" onMouseOver={() => handleChangeImage(item.picture)} />
+            <img  key={Math.random() * Date.now()} src={item.picture} alt="" onMouseOver={() => handleChangeImage(item.picture)} />
           ))}
         </div>
         <div className="product-avatar">
@@ -79,7 +79,7 @@ export default function Product() {
 
           <div className="product-option">
             {product?.productOptions.map((option: any, index: number) => (
-              <img src={option.product_option_picture[0].picture} alt="" onClick={() => handleOptionClick(index)} />
+              <img  key={Math.random() * Date.now()} src={option.product_option_picture[0].picture} alt="" onClick={() =>{ handleOptionClick(index), setQuantity(1)}} />
             ))}
 
           </div>

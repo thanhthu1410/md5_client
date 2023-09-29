@@ -28,7 +28,7 @@ function OffCanvasExample({ name, placement }: OffCanvasExampleProps) {
         <Offcanvas.Header closeButton>
         </Offcanvas.Header>
         <Offcanvas.Body className=''>
-            <LoginSignin/>             
+            <LoginSignin handleClose={handleClose}/>             
         </Offcanvas.Body>
       </Offcanvas>
     </>

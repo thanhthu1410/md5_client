@@ -28,7 +28,7 @@ export default {
           },)
      },
      updateProfile:async (newInfor: any) => {
-        return await axios.post(import.meta.env.VITE_SERVER_HOST_API + "users/updateAvatar", newInfor)
+        return await axios.post(import.meta.env.VITE_SERVER_HOST_API + "users/updateProfile", newInfor)
      },
 
 }

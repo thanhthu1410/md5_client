@@ -21,7 +21,7 @@ export default function Feature() {
        <div className="feature-content">
         {
           categoriesStore.data?.map((item: Categories) => (
-            <div className="feature-item bg-image hover-zoom"  onClick={() => navigate(`shop/${item.id}`)}>
+            <div key={Math.random() * Date.now()} className="feature-item bg-image hover-zoom"  onClick={() => navigate(`shop/${item.id}`)}>
             <img src={item.avatar} alt="" className="w-100"/>
             <button className="btn-98">{item.title}</button>
         </div>
