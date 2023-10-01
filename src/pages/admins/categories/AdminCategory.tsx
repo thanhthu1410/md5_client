@@ -32,7 +32,6 @@ export default function categories() {
   .then(res => {
 
     setCategories(res.data.data);
-    console.log("categories",categories);
   })
   .catch(err => console.log(err)
   )
@@ -47,7 +46,6 @@ export default function categories() {
     if((e.target as any).title.value == ""){
       message.error("Please Enter Name Category ! ")
     }else{
-      console.log('new category',(e.target as any).title.value)
       let newCategory = {
         title:(e.target as any).title.value
       }
@@ -57,14 +55,14 @@ export default function categories() {
       
       api.categories.create(formData)
           .then((res: any) => {
-              console.log("res", res)
+           
               message.success("Add New Category Successfull ! ")
               
               api.categories.findMany()
               .then(res => {
     
                 setCategories(res.data.data);
-                console.log("categories",categories);
+               
                 (document.getElementById("title") as HTMLInputElement
                 ).value = "";
                 (document.getElementById("avatar") as HTMLInputElement

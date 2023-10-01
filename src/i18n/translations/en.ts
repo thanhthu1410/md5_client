@@ -7,9 +7,12 @@ const data = {
     abouts : "ABOUT US",
     hello : "Hi ",
     find : "Find Store",
+    contact: "CONTACT",
       /* home page */ 
     feature : "LIST CATEGORIES",
     directly : "DIRECTLY TO YOU",
+    bn_content: "Contact Us",
+    bn_content_title: "Whether you have questions about our products, payments, delivery or returns, please don't hesitate to get in touch with us",
     directly_content : "We manufacture each product specifically for you and send it to your home without intermediaries or detours. This means you only pay for what's really included: sustainable production and uncompromising quality.",
     /* Shop */
     newtl : "New Arrivals",
@@ -37,6 +40,9 @@ const data = {
   userProfile: "User Profile",
   send: "Send",
   close: "Cancel",
+  freeship: "Freeship with total $1.999.00",
+  language: "LANGUAGE",
+  listCategory: "List Categories",
   /* about page*/ 
   about_title:'About Us',
   about_content : "FurnitureTT is a marvel of noble natural materials, which has survived through the ups and downs of time but still retains its flawless and eternal beauty",

@@ -7,6 +7,9 @@ const data: I18nType = {
     abouts: "THÔNG TIN",
     hello: "Xin Chào ",
     find: "Tìm Cửa Hàng",
+    contact: "LIÊN HỆ",
+    bn_content: "Liên Hệ",
+    bn_content_title: "Cho dù bạn có thắc mắc về sản phẩm, thanh toán, giao hàng hoặc trả lại của chúng tôi, vui lòng liên hệ với chúng tôi",
     /* home page */
     feature: "DANH MỤC SẢN PHẨM",
     directly: "GIAO HÀNG TRỰC TIẾP",
@@ -37,6 +40,9 @@ const data: I18nType = {
     userProfile: "Trang cá nhân",
     send: "Gửi",
     close: "Hủy",
+    freeship: "Miễn phí giao hàng từ 3.999.000 vnd",
+    language: "Ngôn Ngữ",
+    listCategory: "Danh Mục Sản Phẩm",
      /* about page*/ 
   about_title:'Về Chúng Tôi',
   about_content : "FurnitureTT là tuyệt tác của chất liệu tự nhiên quý phái, trường tồn qua thăng trầm của thời gian nhưng vẫn giữ được vẻ đẹp hoàn mỹ và vĩnh cửu",

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '@/services/api';
 import { useSelector } from 'react-redux';
 import { StoreType } from '@/stores';
-
+import { useTranslation } from 'react-i18next';
 
 interface Product {
   id: string;
@@ -50,10 +50,11 @@ function OffCanvasExample({ name, placement }: OffCanvasExampleProps) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const { t } = useTranslation();
   const categories = useSelector((store: StoreType) => store.categoryStore)
   let timeOut : any;
   function search(e : any) {
-    console.log("search",e.target.value);
+    
     clearTimeout(timeOut );
     if(e.target.value == ""){
       setSearchData([])
@@ -63,23 +64,15 @@ function OffCanvasExample({ name, placement }: OffCanvasExampleProps) {
       //  call api
       setSearchStatus(true)
      try{
-       if(searchStatus){
-        console.log("abc");
-        
+       if(searchStatus){       
         return
        }
        let result = await api.product.search(e.target.value);
-       console.log("result",result);
-       
-       
        if(result.status == 200){
         // sau 1.5s set lai data & tat loading
         setTimeout(()=>{
             setSearchStatus(false);
-            setSearchData(result.data.data);
-            console.log("searchData",searchData);
-            
-            
+            setSearchData(result.data.data);      
         },1500)
        
        }else{
@@ -87,9 +80,6 @@ function OffCanvasExample({ name, placement }: OffCanvasExampleProps) {
           setSearchStatus(false);
        }
      }catch(err){
-      console.log("loi call api search");
-      
-
      }
     }, 600)
    
@@ -112,7 +102,7 @@ function OffCanvasExample({ name, placement }: OffCanvasExampleProps) {
         </Offcanvas.Header>
         <Offcanvas.Body className='search_body'>
           <div className='search_categories'>
-            <h4>List Categories</h4>
+            <h4>{t("listCategory")}</h4>
             {categories.data?.map((category: Category) => (
               <p key={Date.now() * Math.random()} onClick={()=> {navigate(`/shop/${category.id}`); handleClose()}} >{category.title}</p>
             ))}

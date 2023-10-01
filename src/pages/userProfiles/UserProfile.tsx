@@ -20,31 +20,35 @@ import { useSelector } from 'react-redux';
 export default function ProfilePage() {
 
   const userStore = useSelector((store : StoreType)=> store.userStore)
-  const[email,setEmail] = useState(userStore.data?.email ?? "")
+  const[email,setEmail] = useState<String>(userStore.data?.email)
   useEffect(()=>{
-      console.log("userStore",userStore);
-      setEmail(userStore?.data?.email)
-  },[userStore])
+      console.log("email",email);
+      setEmail(userStore.data!.email)
+      
+  },[userStore.data])
+  
+  const [hiddenEmail, setHiddenEmail] = useState(""); // Initialize with an empty string
 
-  
-
-    // const email = userStore?.data?.email;
-  
-     function hideMiddleChars  (email: any)  {
-  
-        const parts =  email.split('@');
+  useEffect(() => {
+    async function hideEmail() {
+      if (email) {
+        const parts = await email.split('@');
         const username = parts[0];
         const domain = parts[1];
         if (username.length > 4) {
           const visiblePart = username.slice(0, 2);
           const hiddenPart = '*'.repeat(username.length - 4);
-          return `${visiblePart}${hiddenPart}${username.slice(-3)}@${domain}`;
+          setHiddenEmail(`${visiblePart}${hiddenPart}${username.slice(-3)}@${domain}`);
+        } else {
+          setHiddenEmail(email);
         }
-        return email;
-     
-      
-    };
-    // let hiddenEmail = hideMiddleChars(email);
+      }
+    }
+
+    hideEmail();
+  }, [email]);
+
+    
 
   return (
     <div>
@@ -93,16 +97,27 @@ export default function ProfilePage() {
                 </MDBCol>
                 <MDBCol sm="9">
                   {/* <MDBCardText className="text-muted">{hiddenEmail}</MDBCardText> */}
-                  <MDBCardText className="text-muted">{userStore.data?.email}</MDBCardText>
+                  <MDBCardText className="text-muted">{hiddenEmail}</MDBCardText>
                 </MDBCol>
               </MDBRow>
+              <hr />
+             
+             <MDBRow>
+               <MDBCol sm="3">
+                 <MDBCardText>Address</MDBCardText>
+               </MDBCol>
+               <MDBCol sm="9">
+                 {/* <MDBCardText className="text-muted">{hiddenEmail}</MDBCardText> */}
+                 <MDBCardText className="text-muted">{userStore.data?.address}</MDBCardText>
+               </MDBCol>
+             </MDBRow>
               <hr />     
             <MDBRow>
                 <MDBCol sm="3">
-                  <MDBCardText>Address</MDBCardText>
+                  <MDBCardText>Phone Number </MDBCardText>
                 </MDBCol>
                 <MDBCol sm="9">
-                  <MDBCardText className="text-muted">42 Tu Cuong, Tan Binh</MDBCardText>
+                  <MDBCardText className="text-muted">{userStore.data?.phone_number}</MDBCardText>
                 </MDBCol>
               </MDBRow>
               <button type="button" className="btn btn-secondary"><ChangePassword/></button>

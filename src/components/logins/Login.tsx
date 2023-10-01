@@ -94,7 +94,7 @@ const LoginSignin = (props: Props) => {
     setLoading(true);
     await api.users.register(newUser)
       .then(res => {
-        console.log("res", res)
+      
         if (res.status == 200) {
           message.success({content: res.data.message,
             className : "custom-message1"

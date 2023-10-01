@@ -1,0 +1,116 @@
+/* Import Google font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+// .otp-container,
+.otpForm,
+.input-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.otpForm {
+   
+    .otpVerify-button {
+        background: rgb(167, 185, 138);;
+        color: #fff;
+        padding: 7px 15px;
+        margin-top: 20px;
+        border-radius: 4px;
+
+        &:hover {
+            background-color:rgb(127, 173, 57);;
+        }
+    }
+}
+
+.otp-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // margin-top: 100px !important;
+    width: 100%;
+    height: 90vh;
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(159, 201, 147));
+    padding: 30px 65px;
+    // border-radius: 12px;
+    row-gap: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  
+    margin: 0 auto;
+    .otp-container-chirld{
+        margin-top: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 350px;
+        width: 40%;
+        background-color: #fff;
+        opacity: 0.8;
+        border-radius: 10px;
+        header {
+            height: 65px;
+            width: 65px;
+            background: rgb(127, 173, 57);;
+            color: #fff;
+            font-size: 2.5rem;
+            border-radius: 50%;
+            margin: 0 0 20px 0;
+        }
+    }
+}
+
+
+
+
+.otp-container-chirld h4 {
+    font-size: 1.25rem;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+
+.otpForm .input-field {
+ 
+    flex-direction: row;
+    column-gap: 10px;
+}
+
+.input-field input {
+    height: 45px;
+    width: 42px;
+    border-radius: 6px;
+    outline: none;
+    font-size: 1.125rem;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.input-field input:focus {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.input-field input::-webkit-inner-spin-button,
+.input-field input::-webkit-outer-spin-button {
+    display: none;
+}
+
+
+// form button.active {
+//     background:rgb(127, 173, 57);;
+//     pointer-events: auto;
+// }
+
+// form button:hover {
+//     background: rgb(127, 173, 57);;
+// }
+
+// button.active {
+//     background-color: #00FF00;
+//     /* Màu nền khi nút ở trạng thái active */
+//     color: #000000;
+//     /* Màu chữ khi nút ở trạng thái active */
+//     /* Thêm các thuộc tính CSS khác tùy ý */
+// }

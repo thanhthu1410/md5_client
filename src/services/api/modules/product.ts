@@ -33,4 +33,7 @@ export default {
   updateOption: async (id: string,data: any) => {
     return await axios.patch(import.meta.env.VITE_SERVER_HOST_API + "product-options/" + id,data)
   },
+  updateProduct: async (id: string,data: any) => {
+    return await axios.patch(import.meta.env.VITE_SERVER_HOST_API + "products/" + id,data)
+  },
 }

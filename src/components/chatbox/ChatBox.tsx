@@ -45,13 +45,13 @@ export default function App(data: Data) {
 
   useEffect(() => {
     if (socketClient) {
-      console.log("vào client")
+      
       socketClient.on('connectStatus', (data: any) => {
         //alert(data)
       })
 
       socketClient.on('historyMessage', (data: any) => {
-        console.log("vào")
+     
         setMessageData(data)
       })
     }

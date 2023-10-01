@@ -12,7 +12,7 @@ function ResetPassword() {
     const handleShow = () => setShow(true);
     async function reSetPassword(e: any) {
         e.preventDefault();
-        console.log("email",e.target.reset.value);
+     
         
         await api.users.resetpassword({ email: e.target.reset.value })
             .then(res => console.log("res", res))

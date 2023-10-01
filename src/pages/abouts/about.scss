@@ -40,6 +40,12 @@
             img{
                 border-radius: 12px;
                 width: 30%;
+            
+            }
+            img:hover{
+                transition:  0.3s ease-in-out;
+                scale:1.05;
+         
             }
         }
     }

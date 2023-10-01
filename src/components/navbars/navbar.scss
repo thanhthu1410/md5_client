@@ -1,52 +1,75 @@
-.container-nav{
+.container-nav {
     position: sticky;
     top: 0;
     z-index: 99;
     background-color: #fff;
-    .nav-top{
+
+    .nav-top {
         background-color: rgb(20, 11, 11);
         color: aliceblue;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        p{
+
+        p {
             margin-bottom: 0;
             padding: 5px 10px;
         }
-        .nav-top-right{
-            span{
+
+        .carousel-container {
+            background-color:rgb(17, 15, 15);
+            color: #fff;
+            text-align: center;
+            height: 30px;
+            width: 50%;
+            .title {
+                color:#fff;
+                font-size: 16px;
+                padding: 0px ;
+                // margin-top: 15px;
+            }
+        }
+
+        .nav-top-right {
+            span {
                 margin-right: 10px;
                 padding-right: 20px;
-                 border-right: 2px solid #fff;
+                border-right: 2px solid #fff;
             }
         }
     }
-    .nav-bt{
-        padding: 0 20px ;
+
+    .nav-bt {
+        padding: 0 20px;
         width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        .logo{
-            width: 80px;
-            img{
-                width: 100%;
+
+        .logo {
+            width: 13%;
+
+            img {
+                width: 50%;
             }
         }
-        .nav-title{
+
+        .nav-title {
             font-family: "FuturaPT-Book";
             display: flex;
-            width: 30%;
+            width: 35%;
             justify-content: space-between;
             align-items: center;
             font-size: 20px;
-            p{
+
+            p {
                 margin-bottom: 0;
                 cursor: pointer;
             }
-            
+
         }
-        .nav-icon{
+
+        .nav-icon {
             width: 13%;
             display: flex;
             justify-content: space-between;

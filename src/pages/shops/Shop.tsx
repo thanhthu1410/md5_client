@@ -30,7 +30,7 @@ export default function Shop() {
         </div>
         <div className="shop-content">
             <div className="content-left">
-            <h4 className="categories-title">List Categories</h4>
+            <h4 className="categories-title">{t("listCategory")}</h4>
                 <div className="left-chirld">
                   
                     {

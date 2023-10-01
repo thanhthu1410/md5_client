@@ -24,11 +24,14 @@ function Example() {
     async function update(eventForm: any) {
 
         eventForm.preventDefault();
+        setLoading(true);
         let newData = {
             user_name: eventForm.target.user_name.value,
+            address: eventForm.target.address.value,
+            phone_number: eventForm.target.phone_number.value
         }
         try {
-            setLoading(true);
+           
             let result = await api.users.updateProfile(newData);
             setLoading(false);
             if (result.status == 200) {
@@ -80,8 +83,7 @@ function Example() {
         }catch (err) {
             console.log("err", err)
             setLoading(false);
-            console.log("loi roi nek");
-            
+       
         }
     }
 
@@ -119,13 +121,16 @@ function Example() {
                                 <div className='content_change'>
                                    
                                     <div className='content_right'>
-                                        <label htmlFor="">User_name: </label>
+                                        <label htmlFor="">User_name: </label><br/>
                                         <input type="text" name='user_name' defaultValue={userStore.data?.user_name} style={{ border: "1px solid black", width: "500px", color: "black", borderRadius: "8px", padding: "10px", margin: "5px" }} /><br/>
-                                        <label htmlFor="">Email : </label>
-                                        <input type="text" name='first_name' defaultValue={"username"} style={{ border: "1px solid black", width: "500px", color: "black", borderRadius: "8px", padding: "10px", margin: "5px" }} /><br/>
-                                        <label htmlFor="">Address : </label>
-                                        <input type="text" name='first_name' defaultValue={"username"} style={{ border: "1px solid black", width: "500px", color: "black", borderRadius: "8px", padding: "10px", margin: "5px" }} />
-                                        <button  type='submit' style={{width:"150px",borderRadius:"8px",padding:"5px",marginTop:"15px",color:"#fff",backgroundColor:"black"}} >Save</button>
+                                        <label htmlFor="">Email : </label><br/>
+                                        <input type="text" name='first_name' value={userStore.data?.email} style={{ border: "1px solid black", width: "500px", color: "black", borderRadius: "8px", padding: "10px", margin: "5px" }} /><br/>
+                                        <label htmlFor="">Phone Number: </label><br/>
+                                        <input type="text" name='phone_number' defaultValue={userStore.data?.phone_number} style={{ border: "1px solid black", width: "500px", color: "black", borderRadius: "8px", padding: "10px", margin: "5px" }} /><br/>
+                                        <label htmlFor="">Address : </label><br/>
+                                        <input type="text" name='address' defaultValue={userStore.data?.address} style={{ border: "1px solid black", width: "500px", color: "black", borderRadius: "8px", padding: "10px", margin: "5px" }} />
+                                        <button type='submit' style={{width:"150px",borderRadius:"8px",padding:"5px",marginTop:"15px",color:"#fff",backgroundColor:"black"}}> Save </button>
+                                        
                                     </div>
                                 </div>
                             </form>

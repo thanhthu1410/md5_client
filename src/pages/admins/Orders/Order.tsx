@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import './order.scss';
 import api from '@/services/api';
 import { Modal, message } from 'antd';
+import { Receipt } from '@/stores/slice/user';
+import moment from 'moment';
 
 interface Order {
     id: string,
@@ -15,7 +17,7 @@ interface Order {
 
 export default function Order() {
     const state = ["PENDING", "ACCEPTED", "SHIPPING", "DONE"];
-    const [orders, setOrders] = useState<Order[]>([]);
+    const [orders, setOrders] = useState<Receipt[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [maxItemPage, setMaxItemPage] = useState(10);
     const [skipItem, setSkipItem] = useState(0);
@@ -24,7 +26,7 @@ export default function Order() {
 
     useEffect(() => {
         setIsLoading(true);
-        api.purchaseApi.findAll(maxItemPage, skipItem)
+        api.receipt.findAll(maxItemPage, skipItem)
             .then(res => {
                 if (res.status == 200) {
                     let maxPageArr: any[] = [];
@@ -37,6 +39,8 @@ export default function Order() {
                     setMaxPage(maxPageArr);
                     setSkipItem(res.data.data.length);
                     setOrders(res.data.data);
+                    console.log("oder",orders);
+                    
                 } else {
                     alert(res.data.message)
                 }
@@ -51,7 +55,7 @@ export default function Order() {
     }, [])
 
     function changePage(pageItemObj: any) {
-        api.purchaseApi.findAll(maxItemPage, pageItemObj.skip)
+        api.receipt.findAll(maxItemPage, pageItemObj.skip)
             .then(res => {
                 if (res.status == 200) {
                     console.log("res.data", res.data)
@@ -74,21 +78,22 @@ export default function Order() {
            <nav>
                 <ol className='addProduct-nav'>
                     <li onClick={()=> navigate("/admin")}>Admin /</li>
-                    <li className='add-title'>User-Order </li>
+                    <li className='add-title'>Receipt </li>
              
                 </ol>
             </nav>
             <div className='orders-admin-box'>
-                <div className='orders-title'><h2>Orders</h2><span>{orders.length}</span></div>
+                <div className='orders-title'><h3>Receipt {`( ${orders.length} ) `}</h3></div>
             </div>
             <table>
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col">Receipt ID</th>
                         <th scope="col">Customer</th>
-                        <th scope="col">Delivery Address</th>
+                        <th scope="col">Total</th>
                         <th scope="col">Status</th>
                         <th scope="col">Created</th>
+
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -99,47 +104,47 @@ export default function Order() {
                         </div>
                     </div> : orders?.map((order, index) => (
                         <tr key={Math.random() * Date.now()} className='order'>
-                            <td>{(order as Order).id}</td>
-                            <td>{(order as Order).email}</td>
-                            <td>{(order as Order).address}</td>
+                            <td>{order.id}</td>
+                            <td>{order.user.user_name}</td>
+                            <td>{order.total}</td>
                             <td  className='optionState' onClick={(e) => {
-                                if(order.state == "DONE") return
-                                let curStateIndex = state.indexOf((order as Order).state);
-                                Modal.confirm({
-                                    content: ("You want to next step " + state[curStateIndex + 1]),
-                                    onOk: () => {
-                                        api.purchaseApi.update((order as Order).id, {
-                                            state: state[curStateIndex + 1],
-                                            type: false
-                                        })
-                                            .then(res => {
-                                                message.success(res.data.message);
-                                                (e.target as HTMLElement).querySelector('select')!.value = state[curStateIndex + 1];
-                                                setOrders(orders.map(orderMap => {
-                                                    if(orderMap.id == order.id) {
-                                                        orderMap.state = state[curStateIndex + 1];
-                                                    }
-                                                    return orderMap
-                                                }))
-                                            })
-                                            .catch(err => {
-                                                alert("Lỗi rồi!")
-                                            })
-                                    }
-                                });
+                                if(order.status == "DONE") return
+                                let curStateIndex = state.indexOf(order.status);
+                                // Modal.confirm({
+                                //     content: ("You want to next step " + state[curStateIndex + 1]),
+                                //     onOk: () => {
+                                //         api.purchaseApi.update((order as Order).id, {
+                                //             state: state[curStateIndex + 1],
+                                //             type: false
+                                //         })
+                                //             .then(res => {
+                                //                 message.success(res.data.message);
+                                //                 (e.target as HTMLElement).querySelector('select')!.value = state[curStateIndex + 1];
+                                //                 setOrders(orders.map(orderMap => {
+                                //                     if(orderMap.id == order.id) {
+                                //                         orderMap.state = state[curStateIndex + 1];
+                                //                     }
+                                //                     return orderMap
+                                //                 }))
+                                //             })
+                                //             .catch(err => {
+                                //                 alert("Lỗi rồi!")
+                                //             })
+                                //     }
+                                // });
                             
                             }}>
-                                <select className='optionState' disabled defaultValue={(order as Order).state}>
+                                <select className='optionState' disabled defaultValue={order.status}>
                                     <option value="PENDING">Pending</option>
                                     <option value="ACCEPTED">Accepted</option>
                                     <option value="SHIPPING">Shipping</option>
                                     <option value="DONE">Done</option>
                                 </select>
                             </td>
-                            <td className='date'>{(order as Order).createAt.toLocaleString()}</td>
+                            <td className='date'>{moment(new Date(Number(order.createAt))).format('DD/MM/YYYY')}</td>
                             <td>
                                 <span className="material-symbols-outlined" onClick={() => {
-                                    navigate(`${(order as Order).id}`)
+                                    navigate(`${order.id}`)
                                 }}>
                                     more_horiz
                                 </span>

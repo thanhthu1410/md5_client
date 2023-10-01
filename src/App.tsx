@@ -3,83 +3,35 @@ import { useEffect, useState } from 'react';
 import RouteSetup from './routes/RouteSetup';
 import api from './services/api';
 import { useDispatch, useSelector } from "react-redux";
-import { Receipt, User, userAction } from './stores/slice/user';
-import { Modal, message } from 'antd';
+import { userAction } from './stores/slice/user';
+import { Modal } from 'antd';
 import ChatBox from './components/chatbox/ChatBox';
 import { categoryAction } from './stores/slice/categories';
 import { productAction } from './stores/slice/product';
 import { StoreType } from './stores';
-import { Socket, io } from 'socket.io-client';
 
 export default function App() {
   const dispatch = useDispatch();
   const [openChat, setOpenChat] = useState(false);
-  const store = useSelector((store: StoreType) => store)
-  // useEffect(()=>{
-  //   if(localStorage.getItem("token")){
-  //     api.users.authencation()
-  //     .then(res => {
-  //       console.log("res", res)
-  //       if(res.status == 200){
-  //           dispatch(userAction.setLoginData(res.data.data))
-  //       }
-  //       if (res.status == 213) {
-  //         localStorage.removeItem("token");
-  //       //  window.location.href = "/"
-  //       }
-  //     })
-  //     .catch(err => console.log("err",err))
-  //   }
-    
-  // },[])
-  useEffect(()=>{
-      if(!store.userStore.data){
-         let token = localStorage.getItem("token");
-         if(token) {
-          let socket: Socket = io("http://localhost:3001",{
-            query:{
-              token
-            }
-           })
-           socket.on("connectStatus",(data: {status: boolean, message: string}) => {
-            console.log(data.message)
-          })
-          socket.on("disconnect",()=>{
-            dispatch(userAction.setLoginData(null))
-          })
-          socket.on("receiveUserData",(user: User)=>{
-              dispatch(userAction.setLoginData(user))
-          })
-          socket.on("receiveReceipt", (receipts: Receipt[]) => {
-            dispatch(userAction.setReceipt(receipts))
-           })
-  
-          socket.on("receiveCart", (cart: Receipt) => {
-          dispatch(userAction.setCart(cart))
-          })
-           dispatch(userAction.setSocket(socket))
-         }
-       
-      }
-  },[store.userStore.reLoad])
 
-useEffect(()=>{
-  store.userStore.socket?.on("connectStatus",(data: {status: boolean, message: string}) => {
-    if(data.status){
-       console.log(data.message)
-        
-    }else{
-      console.log(data.message)
+  const productStore = useSelector((store: StoreType) => store.productStore)
+  useEffect(()=>{
+    if(localStorage.getItem("token")){
+      api.users.authencation()
+      .then(res => {
+        console.log("res", res)
+        if(res.status == 200){
+            dispatch(userAction.setLoginData(res.data.data))
+        }
+        if (res.status == 213) {
+          localStorage.removeItem("token");
+        //  window.location.href = "/"
+        }
+      })
+      .catch(err => console.log("err",err))
     }
     
-
-  })
-},[store.userStore.socket])
-
-useEffect(()=>{
-  console.log("userStore",store.userStore);
-  
-},[store.userStore.data])
+  },[])
 
   useEffect(()=>{
     api.categories.findMany()
@@ -92,19 +44,20 @@ useEffect(()=>{
   useEffect(()=>{
     api.product.findMany()
     .then(res => {
-      console.log("lis products",res.data);
+    
       if(res.status == 200){
           dispatch(productAction.setData(res.data.data))
       }
     })
-  },[store.productStore.reLoad])
+  },[productStore.reLoad])
+  
   return (
     <div>
        {
         openChat == false 
         ? <button style={{position: "fixed", right: "50px", bottom: "50px"}} className="btn-94" onClick={() => {
           Modal.confirm({
-            content: "Mở khung chat với tài khoản của bạn?",
+            content: "Open Chat Box with your Account ?",
             onOk: () => {
               setOpenChat(true)
             }

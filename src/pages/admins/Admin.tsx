@@ -22,7 +22,7 @@ export default function Admin() {
      
         <div className="sidebar">
           <div className="logo">
-            <img src="img/logo.png" alt="logo" />
+            {/* <img src="img/logo.png" alt="logo" /> */}
             <h2>FURNITURE</h2>
           </div>
           <ul className="links">

@@ -4,6 +4,9 @@ import api from '@/services/api';
 import { Modal, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import UpdateStatusOption from './UpdateStatusOption';
+import { useDispatch } from 'react-redux';
+import { userAction } from '@/stores/slice/user';
+import { productAction } from '@/stores/slice/product';
 
 type UpdateOptionProp = {
     product: any,
@@ -38,8 +41,9 @@ export default function UpdateProduct(props: UpdateOptionProp) {
     const navigate = useNavigate()
     const [updateData, setUpdateData] = useState(props.product);
     const urlPreviewRef = useRef<HTMLImageElement>(null);
+    const dispatch = useDispatch()
 
-    const cols: number = 60;
+    const cols: number = 55;
     const row: number = 4;
     const closeModal = () => {
         props.setOpenModalUpdate(false);
@@ -52,15 +56,22 @@ export default function UpdateProduct(props: UpdateOptionProp) {
     async function updateProduct(eventForm: any) {
         eventForm.preventDefault();
         let updateInfor = {
-            id: props.product.id,
             name: eventForm.target.name.value,
             desc: eventForm.target.desc.value,
             price: Number(eventForm.target.price.value),
         };
         console.log("updateInfor", updateInfor);
+        api.product.updateProduct(props.product.id,updateInfor)
+        .then(res => {
+            if(res.status == 200) {
+                message.success(res.data.message);
+                closeModal()
+                dispatch(productAction.reload());
+            }
+           
 
-        let formData = new FormData();
-        formData.append("product_infor", JSON.stringify(updateInfor));
+        }
+        )
 
     }
 

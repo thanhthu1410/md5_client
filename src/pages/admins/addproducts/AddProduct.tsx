@@ -4,7 +4,8 @@ import api from '@/services/api';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { StoreType } from '@/stores';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { productAction } from '@/stores/slice/product';
 
 interface Category {
     id: string;
@@ -23,11 +24,13 @@ export default function AddProduct() {
     const [pictures, setPictures] = useState<Picture[]>([]);
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
     const store = useSelector(store => store) as StoreType;
+    const dispatch = useDispatch()
     useEffect(() => {
         setCategories(store.categoryStore.data)
     }, [])
 
     function addNewProduct(e: FormDataEvent) {
+        console.log("thu nekk add sp di")
         e.preventDefault();
         setLoading(true);
         if ((e.target as any).categoryId.value == "" || (e.target as any).name.value == "" || (e.target as any).desc.value == "" || (e.target as any).price.value == "") {
@@ -67,6 +70,9 @@ export default function AddProduct() {
                 ).value = "";
                 (document.getElementById("price") as HTMLInputElement
                 ).value = "";
+                setPictures([]);
+                dispatch(productAction.reload())
+                
 
             })
             .catch((err: any) => {
@@ -76,6 +82,10 @@ export default function AddProduct() {
 
 
     }
+
+    // function handleSubmit () {
+    //     console.log("submit add product")
+    // }
 
     return (
         <div className='addProduct-container'>
@@ -87,9 +97,7 @@ export default function AddProduct() {
                 </ul>
             </nav>
             <h2>Add new product</h2>
-            <form
-                onSubmit={(e) => { addNewProduct(e as any) }}
-            >
+            <form onSubmit={(e) => { addNewProduct(e as any) }} className='form-addProduct'>
                 <div className='form-group'>
                     <label htmlFor="">Name</label><br />
                     <input type="text" id='name' name='name' />
@@ -110,44 +118,7 @@ export default function AddProduct() {
                     <label htmlFor="">Price</label><br />
                     <input type="text" id='price' name='price' />
                 </div>
-                {/* <div className='form-group'>
-                    Avatar
-                    <input name='imgs' id='imgs' type="file" onChange={(e) => {
-                        if (e.target.files) {
-                            if (e.target.files.length > 0) {
-                                (imgPreviewRef.current! as HTMLImageElement).src = URL.createObjectURL(e.target.files[0]);
-                                setAvatarFile(e.target.files[0]);
-                               
-                            }
-                        }
-                    }} />
-                    <img ref={imgPreviewRef} style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
-                </div>
-                <div className='form-group'>
-                    Pictures
-                    <input name="imgs" type="file" id='picture' multiple onChange={(e) => {
-                        if (e.target.files) {
-                            if (e.target.files.length > 0) {
-                                let tempPictures: Picture[] = [];
-                                for (let i in e.target.files) {
-                                    if (i == "length") {
-                                        break
-                                    }
-                                    tempPictures.push({
-                                        file: e.target.files[i],
-                                        url: URL.createObjectURL(e.target.files[i])
-                                    })
-                                }
-                                setPictures(tempPictures)
-                            }
-                        }
-                    }} />
-                    <div style={{display:"flex"}}>
-                        {
-                            pictures.map(picture => <img key={Math.random() * Date.now()} src={picture.url} style={{ width: "100px", height: "100px", borderRadius: "50%" }} />)
-                        }
-                    </div>
-                </div> */}
+               
                   <div>
         
         <div>
@@ -192,7 +163,6 @@ export default function AddProduct() {
                     {loading ? <span className='loading-spinner'></span> : "Save"}
                 </button>
             </form>
-          
         </div>
     )
 }

@@ -14,21 +14,17 @@ interface Picture {
 export default function AppOption(props: Props) {
     const [pictures, setPictures] = useState<Picture[]>([]);
     const [loading, setLoading] = useState(false);
-    useEffect(()=>{
-        console.log("abs");
-        
+    useEffect(()=>{     
     },[props.id])
     function hanldeAddOption(e: any) {
         e.preventDefault();
         setLoading(true)
-        if (e.target.option.value !== "") {
-            console.log('hanlding add option',  e.target.option.value,  props.id );
+        if (e.target.option.value !== "") {         
             const formData = new FormData()
             formData.append("product_options", JSON.stringify({ title: e.target.option.value, productId: props.id }))
             pictures.map((picture) => { formData.append("imgs", picture.file) })
             api.product.createOption(formData)
-                .then(res => {
-                    console.log("res", res);
+                .then(res => {               
                     message.success(res.data.message);
                     (document.getElementById("option") as HTMLInputElement
                     ).value = "";
@@ -39,7 +35,6 @@ export default function AppOption(props: Props) {
 
                 })
                 .catch(err => {
-                    console.log("err", err);
                     setLoading(false)
                 })
         } else {

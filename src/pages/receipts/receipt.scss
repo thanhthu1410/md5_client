@@ -1,0 +1,101 @@
+.receipt-container{
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(159, 201, 147));
+}
+
+@import url('https://fonts.googleapis.com/css?family=Assistant');
+
+
+
+.toggle-btn {
+    width: 40px;
+    height: 21px;
+    background: grey;
+    border-radius: 50px;
+    padding: 3px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s 0.1s ease-in-out;
+    -moz-transition: all 0.3s 0.1s ease-in-out;
+    -o-transition: all 0.3s 0.1s ease-in-out;
+    transition: all 0.3s 0.1s ease-in-out;
+}
+
+.toggle-btn>.inner-circle {
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    border-radius: 50%;
+    -webkit-transition: all 0.3s 0.1s ease-in-out;
+    -moz-transition: all 0.3s 0.1s ease-in-out;
+    -o-transition: all 0.3s 0.1s ease-in-out;
+    transition: all 0.3s 0.1s ease-in-out;
+}
+
+.toggle-btn.active {
+    background: blue !important;
+}
+
+.toggle-btn.active>.inner-circle {
+    margin-left: 19px;
+}
+
+.getOTP-container {
+    width: 100%;
+    height: 90vh;
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(159, 201, 147));
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    .otp-container-chirld{
+        padding: 5%;
+        width: 40%;
+        margin: 90px auto;
+        border-radius: 10px;
+        background-color: #fff;
+        opacity: 0.5;
+        border: 1px solid;
+        h5{
+            color: black;
+            font-weight: 550;
+            font-size: 24px;
+        }
+    }
+
+    input {
+        outline: none;
+        padding: 7px;
+        border: 1px solid black;
+        border-radius: 5px;
+        // width: 50%;
+        margin: 10px 0px;
+    }
+
+    button {
+        background-color: black;
+        color: #fff;
+        padding: 7px 10px;
+        border-radius: 4px;
+        width: 100px;
+    }
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #ffffff;
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

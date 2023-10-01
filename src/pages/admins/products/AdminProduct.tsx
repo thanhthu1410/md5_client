@@ -125,7 +125,7 @@ export default function AdminProduct() {
             </div> :
               products?.map((item: any, index: number) => (
                 <tr key={Math.random() * Date.now()}>
-                  <th scope="row">{index}</th>
+                  <th scope="row">{index + 1}</th>
                   <td className='item-img'><img src={(item as Product).productOptions[0]?.product_option_picture[0].picture} alt="" /></td>
                   <td className='item-name'>{(item as Product).name}</td>
                   <td>{(item as Product).price}</td>

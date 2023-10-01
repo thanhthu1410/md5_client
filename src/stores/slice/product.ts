@@ -1,6 +1,14 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
+export interface Product {
+    id: string;
+    avatar: string;
+    name: string;
+    price: number;
+    categoryId: string
+}
+
 export interface ProductState {
     data: any
     reLoad : boolean

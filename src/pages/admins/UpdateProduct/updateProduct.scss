@@ -1,6 +1,6 @@
 .update-product {
     border: 1px solid black;
-    width: 30%;
+    // max-width: 30%;
     height: 100vh;
     position: fixed;
     top: 0px;
@@ -8,6 +8,8 @@
     background-color: #fff;
     background: #fff;
     padding: 30px;
+    overflow-y: scroll;
+
 
     .product-image {
         img {

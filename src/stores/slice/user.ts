@@ -1,77 +1,6 @@
-
-// import { createSlice } from "@reduxjs/toolkit";
-// import { Socket } from "socket.io-client";
-
-// export interface User {
-//     id: string;
-//     avatar: string;
-//     email: string;
-//     emailAuthentication: boolean;
-//     user_name: string;
-//     password: string;
-//     role: UserRole;
-//     status: UserStatus;
-//     createAt: String;
-//     updateAt: String;
-// }
-// interface UserState {
-//     data: User | null;
-//     reLoad: boolean;
-//     socket: null | Socket;
-// }
-// enum UserStatus {
-//     ACTIVE = "ACTIVE",
-//     BANNED = "BANNED",
-//     TEMPORARY_BAN = "TEMPORARY_BAN"
-// }
-
-// enum UserRole {
-//     OWNER = "OWNER",
-//     ADMIN = "ADMIN",
-//     MEMBER = "MEMBER",
-// }
-
-// const initialState: UserState = {
-//     data: null,
-//     reLoad: false,
-//     socket: null
-// }
-// const userSlice = createSlice({
-//     name: "user",
-//     initialState,
-//     reducers: {
-//         setLoginData: (state, action) => {
-//             return {
-//                 ...state,
-//                 data: action.payload,
-
-//             }
-//         },
-//         setSocket: (state, action) => {
-//             return {
-//                 ...state,
-//                 socket: action.payload,
-
-//             }
-//         },
-//         reload: (state) => {
-//             return {
-//                 ...state,
-//                 reLoad: !state.reLoad,
-
-//             }
-//         }
-//     }
-//     })
-
-
-// export const userAction = {
-//     ...userSlice.actions
-// }
-// export const useReducer = userSlice.reducer
-
 import { createSlice } from "@reduxjs/toolkit";
 import { Socket } from "socket.io-client";
+import { Product } from "./product";
 
 enum UserRole {
     OWNER = "OWNER",
@@ -98,14 +27,14 @@ export interface User {
     avatar: string;
     email: string;
     emailAuthentication: boolean;
-    firstName: string;
-    lastName: string;
-    userName: string;
+    user_name: string;
     password: string;
     role: UserRole;
     status: UserStatus;
     createAt: String;
     updateAt: String;
+    address: string;
+    phone_number: string
 }
 
 export interface Guest {
@@ -123,8 +52,18 @@ export interface ReceiptDetail {
     optionId: string;
     quantity: number;
     receipt: Receipt;
-    option: any
+    option: {
+        id: string;
+        name: string;
+        productId: string;
+        product: Product;
+        product_option_picture: Product_option_picture[]
+    }
 }
+export interface Product_option_picture{
+    id: string;
+    picture: string;
+};
 
 export interface Receipt {
     id: string;
@@ -138,7 +77,7 @@ export interface Receipt {
     accepted: string;
     shipAt: string;
     doneAt: string;
-    detail: ReceiptDetail
+    detail: ReceiptDetail[]
 }
 export interface UserState {
     data: User | null;

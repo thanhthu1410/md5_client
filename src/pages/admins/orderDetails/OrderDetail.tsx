@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './orderDetail.scss';
 import { Link } from 'react-router-dom';
 import api from '@/services/api';
+import { ReceiptDetail, User } from '@/stores/slice/user';
 
 interface Product {
     name: string,
@@ -31,21 +32,19 @@ interface GuestInformation {
 export default function OrderDetail() {
     const { orderId } = useParams();
     const [isLoading, setIsLoading] = useState(false);
-    const [products, setProducts] = useState<OrderItemDetail[]>([]);
-    const [guestReceiptDetail, setGuestReceiptDetail] = useState<OrderItemDetail[]>([]);
+    const [products, setProducts] = useState<ReceiptDetail[]>([]);
+    const navigate = useNavigate()
     const [productVisible, setProductVisible] = useState(false);
-    const [guestInformation, setGuestInformation] = useState(null);
 
     useEffect(() => {
         if (orderId) {
             setIsLoading(true);
-            api.purchaseApi.findById(orderId)
+            api.receipt.findById(orderId)
                 .then(res => {
                     if (res.status === 200) {
-                        // console.log(res.data.data)
-                        setGuestInformation(res.data.data)
-                        // console.log("guestReceiptDetail", guestReceiptDetail)
-                        setGuestReceiptDetail(res.data.data.guestReceiptDetail);
+                        setProducts(res.data.data)
+                        // setGuestReceiptDetail(res.data.data.guestReceiptDetail);
+                        console.log("res", res);
                     }
                 })
                 .finally(() => {
@@ -54,53 +53,25 @@ export default function OrderDetail() {
         }
     }, [orderId]);
 
-    useEffect(() => {
-        formatReceiptDetail();
-        // console.log("guestReceiptDetail", guestReceiptDetail)
-    }, [guestReceiptDetail]);
-
-    async function formatReceiptDetail() {
-        let receiptDetailTemp: OrderItemDetail[] = [];
-        for (let i in guestReceiptDetail) {
-            let productDetail = await api.productApi.findProductById(guestReceiptDetail[i].productId);
-            receiptDetailTemp.push({
-                ...guestReceiptDetail[i],
-                productDetail: productDetail.data.data
-            });
-        }
-        setProducts(receiptDetailTemp);
-    }
-
-    // console.log("products", products)
 
     return (
         <div className='orderDetail-wrapper'>
-            <p><Link to="/admin" className='dashboard'>Dashboard</Link> / <Link to="/admin/order" className='order'>Orders</Link> / Show</p>
-            <div className='orderId'>
-                <span className='title'>ID</span><br />
-                <p>{(guestInformation as any)?.id}</p>
-            </div>
-            <div className='orderCustomer'>
-                <span className='title'>Customer</span><br />
-                <p>{(guestInformation as any)?.email}</p>
-            </div>
-            <div className='orderDelivery'>
-                <span className='title'>Delivery Address</span><br />
-                <p>Address</p>
-            </div>
-            <div className='orderCreated'>
-                <span className='title'>Created</span><br />
-                <p>2{(guestInformation as any)?.createAt}</p>
-            </div>
+           <nav>
+                <ul className='addProduct-nav'>
+                    <li onClick={() => navigate("/admin")}>Admin /</li>
+                    <li className='add-title'>Receipt Detail</li>
+
+                </ul>
+            </nav>
             <table>
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col">STT</th>
                         <th scope="col">Product</th>
                         <th scope="col">Name</th>
                         <th scope="col">Quantity</th>
-                        <th scope="col">Price (per item)</th>
-                        <th scope="col">Total Price</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -111,11 +82,11 @@ export default function OrderDetail() {
                     </div> : products?.map((product, index) => (
                         <tr key={index} className='orderProductDetail'>
                             <td>{index + 1}</td>
-                            <td><img src={product.productDetail.avatar} alt="noImage" className={`${productVisible ? 'show' : ''}`} /></td>
-                            <td className='orderProductDetail-name'>{product.productDetail.name}</td>
+                            <td><img src={product?.option.product.productOptions[0].product_option_picture[0].picture} alt="noImage" className={`${productVisible ? 'show' : ''}`} /></td>
+                            <td className='orderProductDetail-name'>{product.option.product.name}</td>
                             <td className='orderProductDetail-name'>{product.quantity}</td>
-                            <td>${product.productDetail.price}</td>
-                            <td>${product.quantity * product.productDetail.price}</td>
+                            <td>${product.option.product.price}</td>
+                            <td>${product.quantity * product.option.product.price}</td>
                         </tr>
                     ))}
                 </tbody>
