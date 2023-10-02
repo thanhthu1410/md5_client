@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { StoreType } from "@/stores";
 import { Socket, io } from "socket.io-client";
 import { Receipt, User, userAction } from "@/stores/slice/user";
+import { Modal, message } from "antd";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -31,8 +32,8 @@ export default function Home() {
           dispatch(userAction.setLoginData(user))
         })
         socket.on("receiveReceipt", (receipts: Receipt[]) => {
-          console.log("receipt",receipts);
-          
+          console.log("receipt", receipts);
+
           dispatch(userAction.setReceipt(receipts))
         })
 
@@ -60,7 +61,10 @@ export default function Home() {
           dispatch(userAction.setLoginData(null))
         })
         socket.on("receiveUserData", (user: User) => {
+                    console.log("userStore",user);
           dispatch(userAction.setLoginData(user))
+
+          
         })
         socket.on("receiveReceipt", (receipts: Receipt[]) => {
           dispatch(userAction.setReceipt(receipts))
@@ -69,23 +73,59 @@ export default function Home() {
         socket.on("receiveCart", (cart: Receipt) => {
           dispatch(userAction.setCart(cart))
         })
+
+        socket.on("cash-status", (status: boolean) => {
+          if (status) {
+            Modal.success({
+              title: "Payment Successfull !",
+        
+              onOk: () => {
+                console.log("đã vào!")
+                window.location.href= "/thankyou"
+              }
+            })
+            message.success("Payment Successfull !")
+            setTimeout(() => {
+              
+            }, 1500)
+          }
+        })
+
+        socket.on("payQr", (url: string | null) => {
+          dispatch(userAction.setCartPayQr(url))
+          if (!url) {
+            Modal.confirm({
+              title: "Thanh toán thất bại",
+              content: "Bạn có muốn thanh toán lại không?",
+              onOk: () => {
+                console.log("payzalo",userStore);
+                // null ngay đây . mặc dù dã đăng nhập thao tác bình thường
+                socket.emit("payZalo", {
+                  receiptId: userStore.cart?.id,
+                  userId:userStore.data?.id
+                })
+              }
+            })
+          }
+        })
+
         dispatch(userAction.setSocket(socket))
       }
 
     }
   }, [userStore.reLoad])
-  useEffect(()=>{
-    userStore.socket?.on("connectStatus",(data: {status: boolean, message: string}) => {
-      if(data.status){
-         console.log(data.message)
-          
-      }else{
+  useEffect(() => {
+    userStore.socket?.on("connectStatus", (data: { status: boolean, message: string }) => {
+      if (data.status) {
+        console.log(data.message)
+
+      } else {
         console.log(data.message)
       }
     })
-    console.log("userStore",userStore);
-    
-  },[userStore.socket])
+    console.log("userStore", userStore);
+
+  }, [userStore.socket])
   return (
     <div className='home-page'>
       <div className="home-page-content">

@@ -85,6 +85,7 @@ export interface UserState {
     socket: null | Socket;
     receipts: null | Receipt[];
     cart: null | Receipt;
+    cartPayQr: null | string;
 }
 
 export const initialState: UserState = {
@@ -92,7 +93,8 @@ export const initialState: UserState = {
     reLoad: false,
     socket: null,
     receipts: null,
-    cart: null
+    cart: null,
+    cartPayQr: null
 }
 
 const userSlice = createSlice({
@@ -121,6 +123,12 @@ const userSlice = createSlice({
             return {
                 ...state,
                 cart: action.payload
+            }
+        },
+        setCartPayQr: function (state, action) {
+            return {
+                ...state,
+                cartPayQr: action.payload
             }
         },
         reload: function (state) {

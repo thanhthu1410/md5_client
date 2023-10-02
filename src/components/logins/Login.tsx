@@ -6,9 +6,14 @@ import { message } from 'antd';
 import api from "../../services/api/index"
 import ResetPassword from '../resetPasswods/ResetPasswordModal';
 import { useDispatch } from 'react-redux';
-import { userAction } from '@/stores/slice/user';
+import {  userAction } from '@/stores/slice/user';
+import { googleLogin } from '@/firebase';
+import { User } from 'firebase/auth';
 interface Props{
   handleClose: any
+}
+interface UserGoogle extends User {
+  accessToken: string
 }
 const LoginSignin = (props: Props) => {
   const dispatch = useDispatch()
@@ -18,6 +23,7 @@ const LoginSignin = (props: Props) => {
   const [passwordError, setPasswordError] = useState('');
   const [userNameError, setUserNameError] = useState('');
   const [emailError, setEmailError] = useState('');
+  
 
   const handleSignupClick = () => {
     const loginForm = document.querySelector("form.login") as HTMLFormElement;
@@ -186,8 +192,41 @@ const LoginSignin = (props: Props) => {
 
             </div>
             <div className="pass-link">
-              <a href="#">{t("loginWith")} </a>
-              <img src="https://www.hieuhien.vn/wp-content/uploads/2019/01/google-chinh-thuc-doi-logo-moi-7634.jpg" alt="" />
+              <a >{t("loginWith")} </a>
+              <img onClick={async () => {
+                                try {
+                                    await googleLogin()
+                                    .then(async  (res) => {
+                                        let data = {
+                                            accessToken: (res.user as UserGoogle).accessToken,
+                                            email: res.user.email,
+                                            user_name: res.user.email,
+                                            password: res.user.uid
+                                        }
+                                        console.log("data", data)
+                                        await api.users.googleLogin(data)
+                                            .then(res => {
+                                              console.log("res",res);
+                                              
+                                                if (res.status == 200) {
+                                                    localStorage.setItem("token", res.data.token);
+                                                    dispatch(userAction.reload())
+                                                }
+                                            })
+                                            .catch(err => {
+                                              console.log("err",err);
+                                              
+                                                alert("Google Login Failed")
+                                            })
+                                    })
+                                    .catch(err => {
+                                        window.alert("Login Google Failed")
+                                    })      
+
+                                } catch (err) {
+                                    window.alert("Login Google Thất bại, thử lại!")
+                                }
+                            }} src="https://www.hieuhien.vn/wp-content/uploads/2019/01/google-chinh-thuc-doi-logo-moi-7634.jpg" alt="" />
             </div>
             
           

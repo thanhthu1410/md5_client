@@ -1,6 +1,14 @@
 import axios from "axios"
 
 export default {
+    googleLogin: async (data: any) => {
+        console.log("data",data);
+        
+        return await axios.post(
+            import.meta.env.VITE_SERVER_HOST_API + "users/google-login",
+            data,
+        )
+    },
     register: async (newUser: any)=>{
         return await axios.post(import.meta.env.VITE_SERVER_HOST_API + "users",newUser)
         .then(res => res)

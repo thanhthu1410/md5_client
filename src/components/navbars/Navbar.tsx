@@ -35,7 +35,7 @@ export default function Navbar() {
     return (
         <div className='container-nav'>
             <div className='nav-top'>
-                {userStore.data ?<p>{t("hello")} {userStore.data?.user_name} !</p> : <p>{t("hello")}  !</p>}
+                {userStore.data ?<p className='nav-top-left'>{t("hello")} {userStore.data?.user_name} !</p> : <p className='nav-top-left'>{t("hello")}  !</p>}
                 
               
                 <p className='carousel-container'>
@@ -57,7 +57,7 @@ export default function Navbar() {
                
                 <p className='nav-top-right'> 
                 <span>{t("find")}</span>
-                <select name="" id="" onChange={(e)=> handleChangeLanguage(e.target.value)}>
+                <select name="" id="" className='selectLanguage' onChange={(e)=> handleChangeLanguage(e.target.value)}>
                     <option value="">{t("language")}</option>
                     <option value="vi">VN</option>
                     <option value="en">EN</option>
