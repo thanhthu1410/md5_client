@@ -4,10 +4,13 @@ import { useState } from "react";
 import { ReceiptDetail } from "@/stores/slice/user";
 import { StoreType } from "@/stores";
 import { useSelector } from "react-redux";
+import { GuestCartState } from "@/stores/slice/guestCart.slice";
 interface Props{
-    receiptDetail: ReceiptDetail
+    receiptDetail: ReceiptDetail;
+   
 }
 export default function CartDetail(props: Props) {
+    console.log("props.ReceiptDetail",props.receiptDetail);
     const [quantity, setQuantity] = useState(props.receiptDetail.quantity)
     const userStore = useSelector((store: StoreType) => {
         return store.userStore

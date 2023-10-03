@@ -3,11 +3,12 @@ import "./product.scss"
 import { useParams } from "react-router-dom"
 import api from "@/services/api"
 import { message } from "antd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { StoreType } from "@/stores";
 import { ReceiptDetail } from "@/stores/slice/user";
 import SaleCarousel from "../shops/ProductSales/ProductSale";
 import RelatedProduct from "./relatedProducts/RelateProducts";
+import { guestCartActions } from "@/stores/slice/guestCart.slice";
 
 
 interface Product {
@@ -40,6 +41,7 @@ export default function Product() {
     return store.userStore
   })
   const { id } = useParams()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     api.product.findProductById(id!)
@@ -65,36 +67,60 @@ export default function Product() {
   }
 
   const handleAddToCart = () => {
-    const cart = userStore.cart?.detail;
-    if (cart && product && product.productOptions && product.productOptions[selectedOption]) {
-      const selectedProductOption = product.productOptions[selectedOption];
-      const foundItem = cart.find((item: ReceiptDetail) => item.optionId === selectedProductOption.id);
-
-      if (foundItem) {
-        const quantityParam = foundItem.quantity + quantity;
-
-        if (userStore.socket) {
-          userStore.socket.emit("addToCart", {
-            receiptId: userStore.cart?.id,
-            optionId: selectedProductOption.id,
-            quantity: quantityParam
-          });
+    
+    if (userStore.socket) {
+      const cart = userStore.cart?.detail;
+      if (cart && product && product.productOptions && product.productOptions[selectedOption]) {
+        const selectedProductOption = product.productOptions[selectedOption];
+        const foundItem = cart.find((item: ReceiptDetail) => item.optionId === selectedProductOption.id);
+  
+        if (foundItem) {
+          const quantityParam = foundItem.quantity + quantity;
+  
+          if (userStore.socket) {
+            userStore.socket.emit("addToCart", {
+              receiptId: userStore.cart?.id,
+              optionId: selectedProductOption.id,
+              quantity: quantityParam
+            });
+          }
+  
+          message.success("Add To Cart Successfully");
+  
+        } else {
+          if (userStore.socket) {
+            userStore.socket.emit("addToCart", {
+              receiptId: userStore.cart?.id,
+              optionId: selectedProductOption.id,
+              quantity: quantity,
+  
+            });
+          }
+          message.success("Add To Cart Successfully");
         }
-
-        message.success("Add To Cart Successfully");
-
-      } else {
-        if (userStore.socket) {
-          userStore.socket.emit("addToCart", {
-            receiptId: userStore.cart?.id,
-            optionId: selectedProductOption.id,
-            quantity: quantity,
-
-          });
-        }
-        message.success("Add To Cart Successfully");
       }
+    } else {
+      let cart = JSON.parse(localStorage.getItem("cart") ?? "[]");
+      let findResult = cart.find((item: any) => item.option.id === product?.productOptions[selectedOption].id);
+      if (findResult) {
+          findResult.quantity += quantity
+          localStorage.setItem("cart", JSON.stringify(cart))
+      } else {
+          cart.push({
+              option: {
+                  ...product?.productOptions[selectedOption],
+                  product: {
+                      name: product?.name,
+                      price: product?.price
+                  }
+              },
+              quantity: 1,
+          })
+          localStorage.setItem("cart", JSON.stringify(cart))
+      }
+      dispatch(guestCartActions.setCart(cart))
     }
+    
   }
 
   return (

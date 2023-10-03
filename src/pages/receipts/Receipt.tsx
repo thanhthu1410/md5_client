@@ -6,40 +6,30 @@ import api from '@/services/api';
 import { useNavigate } from 'react-router-dom';
 import OTPVerification from './otpVerify/OtpVerify';
 import { message } from 'antd';
+import axios from 'axios';
+import { CartItemType } from '@/stores/slice/guestCart.slice';
 
-interface ReceiptInter {
-  email : string,
-  id: string,
-  state: string,
-  total: number,
-  createAt: Date,
-  phoneNumber : string,
-  guestReceipt : GuestReceiptDetail[]
-}
-interface  GuestReceiptDetail {
-  guestReceiptId : string,
-  id: string,
-  productId : string,
-  quantity : number,
-}
-interface Product {
-  name: string,
-  avatar: string,
-  price: number,
-  des: string,
-  categoryId: number,
-  categoryName: string,
-  updateAt: Date
-}
+
+
 
 interface OrderItem {
-  productId: string;
-  quantity: number;
-  price: number;
+  payMode: string
+  shipAt: string
+  status: string
+  total: number
+  paid: boolean
+  createAt: string
+  id: string
+}
+interface Guest {
+  email: string
+  name: string
+  numberPhone: string
 }
 
 interface OrderItemDetail extends OrderItem {
-  productDetail: Product
+  detail: CartItemType[]
+  guest: Guest
 }
 
 export default function Receipt() {
@@ -51,9 +41,10 @@ export default function Receipt() {
   const [isShow, setIsShow] = useState(true);
   const [isShowReceipts, setIsShowReceipts] = useState(false);
   const navigate = useNavigate();
+ 
   function handleGetOtp() {
     setLoading(true);
-    api.purchaseApi.findGuestReceipt({ email: emailInput })
+    axios.get(`http://127.0.0.1:3000/api/v1/guest/?email=${emailInput}`)
       .then(res => {
         setLoading(false);
         if (res.status == 200) {
@@ -71,35 +62,23 @@ export default function Receipt() {
 
   }
   function handleGetReceipt(otp: string) {
-    api.purchaseApi.findGuestReceipt({ email: emailInput, otp: otp ?? "29121999" })
+    axios.get(`http://127.0.0.1:3000/api/v1/guest/?email=${emailInput}&otp=${otp}`)
       .then(res => {
+        console.log("res", res)
         if (res.status == 200) {
           setIsShowOTP(false);
           setIsShowReceipts(true);
-          console.log("res", res.data.data.guestReceiptDetail)
+          console.log("setGuestReceiptDetail", res.data.data)
           setGuestReceiptDetail(res.data.data)
         }
       })
   }
 
   useEffect(() => {
-    // formatReceiptDetail();
-    // console.log("products", products)
+
     console.log("guestReceiptDetail", guestReceiptDetail)
   }, [guestReceiptDetail]);
   
-
-//   async function formatReceiptDetail() {
-//     let receiptDetailTemp: OrderItemDetail[] = [];
-//     for (let i in guestReceiptDetail) {
-//         let productDetail = await api.productApi.findProductById(guestReceiptDetail[i].productId);
-//         receiptDetailTemp.push({
-//             ...guestReceiptDetail[i],
-//             productDetail: productDetail.data.data
-//         });
-//     }
-//     setProducts(receiptDetailTemp);
-// }
 
 
 
@@ -118,7 +97,7 @@ export default function Receipt() {
         </div>
       </div> : <></>}
       {isShowOTP ? <OTPVerification handleGetReceipt={handleGetReceipt} /> : <></>}
-      {isShowReceipts ? guestReceiptDetail?.map((receipt: any) => (
+      {isShowReceipts ? guestReceiptDetail?.map((receipt: OrderItemDetail) => (
         <div className="receipt-container">
           <section className="h-100 gradient-custom">
             <div className="container py-5 h-100">
@@ -128,7 +107,7 @@ export default function Receipt() {
                     <div className="card-header px-4 py-5">
                       <h5 className="text-muted mb-0">
                         Thanks for your Order,{" "}
-                        <span style={{ color: "#a8729a" }}>{receipt.email}</span>!
+                        <span style={{ color: "#a8729a" }}>{receipt.guest.email}</span>!
                       </h5>
                     </div>
                     <div className="card-body p-4">
@@ -140,28 +119,28 @@ export default function Receipt() {
                           Order Time : {receipt.createAt}
                         </p>
                         <p className="small text-muted mb-0">
-                          Your Phone number: {receipt.phoneNumber}
+                          Your Phone number: {receipt.guest.numberPhone}
                         </p>
                       </div>
-                      {receipt.guestReceiptDetail.map((item : any) => (
+                      {receipt.detail.map((item : CartItemType) => (
                           <div className="card shadow-0 border mb-4">
                           <div className="card-body">
                             <div className="row">
                               <div className="col-md-2">
                                 <img
-                                  src={item.product.avatar}
+                                  src={item.option.product_option_picture[0].picture}
                                   className="img-fluid"
                                   alt="Phone"
                                 />
                               </div>
                               <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                <p className="text-muted mb-0">{item.product.name}</p>
+                                <p className="text-muted mb-0">{item.option.product.name}</p>
                               </div>
                               <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
                                 <p className="text-muted mb-0 small">{item.quantity}</p>
                               </div>
                               <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                <p className="text-muted mb-0 small">{item.product.price}</p>
+                                <p className="text-muted mb-0 small">{item.option.product.price}</p>
                               </div>
                            
                            
@@ -240,7 +219,8 @@ export default function Receipt() {
           </section>
         </div>
 
-      )) : <></>}
+      ))
+       : <></>}
 
     </>
 

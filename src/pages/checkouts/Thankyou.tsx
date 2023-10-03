@@ -5,8 +5,8 @@ import "./thankyou.scss"
 export default function Thankyou() {
   const navigate = useNavigate()
   return (
-    <div>
-        <div className="vh-100 d-flex justify-content-center align-items-center">
+    <div className="thankyou-container">
+        <div className="vh-100 thankcontainer">
   <div className="col-md-4">
     <div className="border border-3 border-success" />
     <div className="card  bg-white shadow p-5">
@@ -26,7 +26,7 @@ export default function Thankyou() {
       <div className="text-center">
         <h1>Thank You !</h1>
         <p>
-        For Your Order !You can see your list oder in your Email !{" "}
+        For Your Order ! You can see your list oder in Receipt Purchase Page !{" "}
         </p>
         <button className="btn btn-outline-success" onClick={()=> navigate("/")}>Back Home</button>
         {localStorage.getItem("token") ? <button className="listOderbtn" onClick={() => navigate("/user-receipt")} >List Oder</button> : ""}

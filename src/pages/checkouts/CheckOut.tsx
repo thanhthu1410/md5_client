@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react'
 import "./checkout.scss"
 import api from '@/services/api';
 import { useNavigate } from 'react-router-dom';
-import { QRCode, message } from 'antd';
-import { useSelector } from 'react-redux';
+import { Modal, QRCode, message } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 import { StoreType } from '@/stores';
 import { ReceiptDetail } from '@/stores/slice/user';
+import axios from 'axios';
+import { guestCartActions } from '@/stores/slice/guestCart.slice';
 interface Product {
   id: string;
   name: string;
@@ -44,43 +46,97 @@ export default function CheckOut() {
   const userStore = useSelector((store: StoreType) => {
     return store.userStore
   })
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const guestCartStore = useSelector((store : StoreType) => store.guestCartStore)
   const [cart, setCart] = useState<CartItemDetail[]>([]);
   function handleOrder(e: any) {
     setLoading(true);
     e.preventDefault();
-    if (e.target.name.value == "" || e.target.email.value == "" || e.target.phone.value == "" || e.target.address.value == "") {
+    /* guest */
+    if (e.target.name.value == "" || e.target.email.value == "" || e.target.phoneNumber.value == "" || e.target.address.value == "") {
       message.warning("Please enter full fill your billing address !")
       setLoading(false)
-    } else {
-      const paymode = e.target.payMode.value;
-      if (paymode == "") {
+      
+    }
+    let payMode = e.target.payMode.value;
+    let guest = {
+      name: (e.target as any).name.value,
+      numberPhone: (e.target as any).phoneNumber.value,
+      email: (e.target as any).email.value
+    }
+    console.log("guest",guest);
+    
+    /* guest */
+ 
+    
+      if (payMode == "") {
         message.error('Please Choose Paymode !')
       }
-      console.log("paymode", paymode);
-      if (paymode == "CASH") {
-        userStore.socket?.emit("payCash", {
-          receiptId: userStore.cart?.id,
-          userId: userStore.data?.id,
-          total: subTotal
+      console.log("paymode", payMode);
+      if(userStore.socket){
+        if (payMode == "CASH") {
+          userStore.socket?.emit("payCash", {
+            receiptId: userStore.cart?.id,
+            userId: userStore.data?.id,
+            total: subTotal
+          })
+          message.success("Oder Successfull");
+          navigate("/thankyou")
+        }
+  
+        if (payMode == "ZALO") {
+          userStore.socket?.emit("payZalo", {
+            receiptId: userStore.cart?.id,
+            userId: userStore.data?.id,
+            total: subTotal
+          })
+        }
+      }else {
+       
+        
+        let carFormat = guestCartStore.cart?.map((item) => {
+          return {
+            optionId: item.option.id,
+            quantity: item.quantity
+          }
         })
-        message.success("Oder Successfull");
-        navigate("/thankyou")
-      }
 
-      if (paymode == "ZALO") {
-        userStore.socket?.emit("payZalo", {
-          receiptId: userStore.cart?.id,
-          userId: userStore.data?.id,
-          total: subTotal
+        let body = {
+          guest,
+          receiptDetails: carFormat,
+          payMode,
+          total: guestCartStore.cart?.reduce((total, item) => {
+            return total + item.quantity * item.option.product.price
+          }, 0)
+        }
+
+        console.log("body", body)
+       
+        axios.post("http://127.0.0.1:3000/api/v1/guest", body)
+        .then((res) => {
+          if(res.status == 200) {
+            Modal.success({
+              title: "Oder Successfull !",
+              content: "You can review the order history on the purchase history page",
+              onOk: () => {
+                dispatch(guestCartActions.setCart([]))
+                localStorage.setItem("cart", "[]"),
+                navigate("/thankyou")
+              }
+            })
+          }else {
+            alert("Lỗi")
+          }
+        })
+        .catch(err => {
+          console.log("err", err)
+          alert("Lỗi")
         })
       }
-
-
       setLoading(false)
 
-    }
+    
 
 
   }
@@ -120,8 +176,8 @@ export default function CheckOut() {
           <div className='qrContainer'>
             <div className='qrContainer-chirld'>
               <img src="https://firebasestorage.googleapis.com/v0/b/md05furniturestore.appspot.com/o/test%2F1622682588188_zalopay.png?alt=media&token=c19747fb-58b0-4961-ba04-d0a9a9c7bdb1&_gl=1*1l56kpl*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NjI1NjY4NS41Mi4xLjE2OTYyNTY3NTUuNjAuMC4w" alt="" />
-                <img className='logoQr' src="https://firebasestorage.googleapis.com/v0/b/md05furniturestore.appspot.com/o/test%2Flogo.png?alt=media&token=0906f3f7-8eb1-4113-af95-e6ca135af6da&_gl=1*yw45s0*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NjA2Nzk2NC40OC4xLjE2OTYwNjk1MDYuNTMuMC4w" alt="" />
-              <QRCode value={userStore.cartPayQr} icon='https://cafebiz.cafebizcdn.vn/thumb_w/600/162123310254002176/2022/7/9/photo1657324993775-1657324993859181735127.jpg' />
+              <img className='logoQr' src="https://firebasestorage.googleapis.com/v0/b/md05furniturestore.appspot.com/o/test%2Flogo1.jpg?alt=media&token=9a98413d-b9d9-4506-bd3c-a414046dcf06&_gl=1*s62pxm*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NjMzMzUxNS41Ni4wLjE2OTYzMzM1MTUuNjAuMC4w" alt="" />
+              <QRCode value={userStore.cartPayQr} icon='https://firebasestorage.googleapis.com/v0/b/md05furniturestore.appspot.com/o/test%2Flogo1.jpg?alt=media&token=9a98413d-b9d9-4506-bd3c-a414046dcf06&_gl=1*s62pxm*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NjMzMzUxNS41Ni4wLjE2OTYzMzM1MTUuNjAuMC4w' />
               <p>Awaiting payment.....</p>
               <h4>Scan to Pay</h4>
             </div>
@@ -163,7 +219,7 @@ export default function CheckOut() {
                         <input
                           type="text"
                           id="adr"
-                          name="phone"
+                          name="phoneNumber"
                           placeholder="+ 84 999 999 999"
                         />
                         <label htmlFor="adr">
@@ -211,17 +267,17 @@ export default function CheckOut() {
                           <i className="fas fa-phone me-3" /> Phone Number
                         </label>
                         <input
-                         defaultValue={userStore.data.phone_number}
+                          defaultValue={userStore.data.phone_number}
                           type="text"
                           id="adr"
-                          name="phone"
+                          name="phoneNumber"
                           placeholder="+ 84 999 999 999"
                         />
                         <label htmlFor="adr">
                           <i className="fas fa-home me-3" /> Address
                         </label>
                         <input
-                         defaultValue={userStore.data.address}
+                          defaultValue={userStore.data.address}
                           type="text"
                           id="adr"
                           name="address"
@@ -247,11 +303,16 @@ export default function CheckOut() {
 
                 </div>
 
-                {loading ? <button className='loading-button'><span className='loading-spinner'></span></button> : <input
+                {/* {loading ? <button className='loading-button'><span className='loading-spinner'></span></button> : <input
                   type="submit"
                   defaultValue="Continue to checkout"
                   className="btn-checkout"
-                />}
+                />} */}
+                <input
+                  type="submit"
+                  defaultValue="Continue to checkout"
+                  className="btn-checkout"
+                />
               </form>
             </div>
           </div>

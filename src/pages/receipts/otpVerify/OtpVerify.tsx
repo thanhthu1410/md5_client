@@ -60,6 +60,8 @@ function OTPVerification(props: OTPVerificationProp) {
     };
 
     const combinedValue = inputValues.join('');
+    console.log("combinedValue",combinedValue);
+    
 
     return (
         <div className="otp-container">

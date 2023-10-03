@@ -1,13 +1,14 @@
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import "./cart.scss"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import "./cartDetails/cartDetail.scss"
 import { useNavigate } from 'react-router-dom';
 import CartDetail from './cartDetails/CartDetail';
 import { useSelector } from 'react-redux';
 import { StoreType } from '@/stores';
 import { useTranslation } from 'react-i18next';
+import CartGuestReceipt from './cartDetails/CartGuestDetail';
 // Define a union type for the allowed placement values
 type OffcanvasPlacement = 'top' | 'bottom' | 'start' | 'end';
 
@@ -37,14 +38,26 @@ function OffCanvasExample({ name, placement }: OffCanvasExampleProps) {
     return value + current.quantity * current.option.product.price
   }, 0)
 
+  const guestCartStore = useSelector((store: StoreType) => {
+    return store.guestCartStore
+  })
 
+
+  useEffect(() => {
+    console.log("guestCartStore", guestCartStore)
+  }, [guestCartStore.cart])
 
 
   return (
     <>
       <Button variant="" onClick={handleShow} className="click_cart">
         <i className="fa fa-shopping-bag" />
-        <p className='quantityInCart'>{totalQuantity}</p>
+        <p className='quantityInCart'> {
+          userStore.socket ? totalQuantity
+            : guestCartStore.cart?.reduce((value, cur) => {
+              return value += cur.quantity
+            }, 0)
+        }</p>
       </Button>
       <Offcanvas className="offcanvasCart" show={show} onHide={handleClose} placement={placement}>
         <Offcanvas.Header closeButton>
@@ -57,10 +70,14 @@ function OffCanvasExample({ name, placement }: OffCanvasExampleProps) {
         {
           userStore.cart?.detail.length !== 0 ?
             <Offcanvas.Body className='cart_content'>
-              <p>Total Product  {`( ${totalQuantity} )`}</p>
+              <p>Total Product  {userStore.socket ? `( ${totalQuantity} )` : `( ${guestCartStore.cart?.reduce((value, cur) => { return value += cur.quantity }, 0)} )`}</p>
 
               <div className='containerCartDetail'>
-                {userStore.cart?.detail.map((item, index) => <CartDetail key={Math.random() * Date.now()} receiptDetail={item} />)}
+                {userStore.socket ? userStore.cart?.detail.map((item, index) => <CartDetail key={Math.random() * Date.now()} receiptDetail={item} />)
+                  :
+                  guestCartStore.cart?.map((item, index) => <CartGuestReceipt key={Math.random() * Date.now()} guestReceipt={item} />
+                  )
+                }
 
 
               </div>
@@ -74,7 +91,7 @@ function OffCanvasExample({ name, placement }: OffCanvasExampleProps) {
                   <p className='total'>SubTotal :  {formatter.format(Number(subTotal))}</p>
 
                 </div>
-                <button className='checkout-btn' onClick={()=>{navigate("/checkout");handleClose()}}>Check Out</button>
+                <button className='checkout-btn' onClick={() => { navigate("/checkout"); handleClose() }}>Check Out</button>
 
               </div>
             </Offcanvas.Body>
@@ -156,10 +173,12 @@ function OffCanvasExample({ name, placement }: OffCanvasExampleProps) {
                   </g>
                 </svg>
                 <p> Your Shopping Cart is empty ! </p>
-                <button className="btn-5" onClick={() =>{ navigate("/shop/1");
-              handleClose()}}><span>Shopping now</span></button>
+                <button className="btn-5" onClick={() => {
+                  navigate("/shop/1");
+                  handleClose()
+                }}><span>Shopping now</span></button>
               </div>
-             
+
 
             </div>
         }

@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   MDBContainer,
   MDBRow,
@@ -75,6 +75,14 @@ export default function App(data: Data) {
     }
   };
 
+  const chatContainerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messageData]);
+
   // function formatData(data: any) {
   //   let result = []
   //   for (let i in data) {
@@ -122,7 +130,9 @@ export default function App(data: Data) {
             <div
               style={{ position: "relative", height: "400px", overflowY: "auto" }}
             >
-              <MDBCardBody>
+              <div ref={chatContainerRef}
+                style={{ position: "relative", height: "400px", overflowY: "auto" }}>
+                  <MDBCardBody>
                 {/* {
                   formatData(messageData).map(message => {
                     if (message.type == "ADMIN") {
@@ -232,6 +242,8 @@ export default function App(data: Data) {
                   })
                 }
               </MDBCardBody>
+              </div>
+              
             </div>
             <MDBCardFooter className="text-muted d-flex justify-content-start align-items-center p-3">
               <img

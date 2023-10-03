@@ -39,7 +39,7 @@ export default function Dropdown() {
                        <LoginMoldal/>                   
                 </li>
                 <li>
-                    <a className="dropdown-item" href='/admin'>
+                    <a className="dropdown-item" href='/receipt'>
                     {t("purchaseHistory")}
                       
                     </a>

@@ -8,11 +8,14 @@ import { StoreType } from "@/stores";
 import { Socket, io } from "socket.io-client";
 import { Receipt, User, userAction } from "@/stores/slice/user";
 import { Modal, message } from "antd";
+import { guestCartActions } from "@/stores/slice/guestCart.slice";
 
 export default function Home() {
   const dispatch = useDispatch();
   const userStore = useSelector((store: StoreType) => store.userStore)
-
+  useEffect(() => {
+    dispatch(guestCartActions.setCart(JSON.parse(localStorage.getItem("cart") || "[]")))
+  }, [])
   useEffect(() => {
     if (!userStore.data) {
       let token = localStorage.getItem("token");
@@ -45,6 +48,7 @@ export default function Home() {
 
     }
   }, [userStore.reLoad])
+
   useEffect(() => {
     if (!userStore.data) {
       let token = localStorage.getItem("token");
