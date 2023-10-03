@@ -19,7 +19,7 @@ export default function App() {
     if(localStorage.getItem("token")){
       api.users.authencation()
       .then(res => {
-        console.log("res", res)
+       
         if(res.status == 200){
             dispatch(userAction.setLoginData(res.data.data))
         }

@@ -17,37 +17,47 @@ import ChangeInfo from './ChangeInfor'
 import "./auth.scss"
 import { StoreType } from '../../stores';
 import { useSelector } from 'react-redux';
+import api from '@/services/api';
+import { message } from 'antd';
 export default function ProfilePage() {
 
   const userStore = useSelector((store : StoreType)=> store.userStore)
-  const[email,setEmail] = useState<String>(userStore.data?.email)
+  const[email,setEmail] = useState<string | null>(null)
   useEffect(()=>{
-      console.log("email",email);
+    if(userStore.data) {
       setEmail(userStore.data!.email)
-      
+    }   
+    console.log("userStore",userStore.data);
+    
   },[userStore.data])
   
   const [hiddenEmail, setHiddenEmail] = useState(""); // Initialize with an empty string
 
   useEffect(() => {
-    async function hideEmail() {
-      if (email) {
-        const parts = await email.split('@');
-        const username = parts[0];
-        const domain = parts[1];
-        if (username.length > 4) {
-          const visiblePart = username.slice(0, 2);
-          const hiddenPart = '*'.repeat(username.length - 4);
-          setHiddenEmail(`${visiblePart}${hiddenPart}${username.slice(-3)}@${domain}`);
-        } else {
-          setHiddenEmail(email);
+    if(email) {
+      async function hideEmail() {
+        if (email) {
+          const parts = await email.split('@');
+          const username = parts[0];
+          const domain = parts[1];
+          if (username.length > 4) {
+            const visiblePart = username.slice(0, 2);
+            const hiddenPart = '*'.repeat(username.length - 4);
+            setHiddenEmail(`${visiblePart}${hiddenPart}${username.slice(-3)}@${domain}`);
+          } else {
+            setHiddenEmail(email);
+          }
         }
       }
+      hideEmail();
     }
-
-    hideEmail();
   }, [email]);
-
+  async function resendEmail() {
+    api.users.resendEmail()
+    .then(res => message.success("Check your email"))
+    .catch(err => console.log("err",err))
+    
+}
     
 
   return (
@@ -120,6 +130,22 @@ export default function ProfilePage() {
                   <MDBCardText className="text-muted">{userStore.data?.phone_number}</MDBCardText>
                 </MDBCol>
               </MDBRow>
+              <hr/>
+
+
+              {userStore.data?.emailAuthentication === false ?     
+              <MDBRow>
+               <MDBCol sm="3">
+                 <MDBCardText>  </MDBCardText>
+               </MDBCol>
+               <MDBCol sm="9">
+                 {/* <MDBCardText className="text-muted">{hiddenEmail}</MDBCardText> */}
+                 <MDBCardText className="text-muted"> <p>Resend Email In <span style={{ color: "red", cursor: "pointer" }} onClick={() => resendEmail()}>Here</span> !</p></MDBCardText>
+               </MDBCol>
+             </MDBRow>
+               
+              : <></>}
+              
               <button type="button" className="btn btn-secondary"><ChangePassword/></button>
             </MDBCardBody>
            

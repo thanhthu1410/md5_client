@@ -213,3 +213,56 @@ h3{
   justify-content: space-between;
   width: 100%;
 }
+
+.checkout-container {
+  width: 100%;
+  position: relative;
+}
+
+.qrContainer {
+  width: 100%;
+  background-color: rgb(250, 247, 247);
+  height: 90vh;
+  position: absolute;
+  z-index: 3;
+  opacity: 0.85;
+}
+
+.qrContainer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  z-index: -1;
+}
+
+.qrContainer-chirld {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  width: 350px;
+  height: 450px;
+  background-color:#fff;
+  z-index: 6 !important;
+  opacity: 1;
+  box-shadow: 0px 1px 10px 3px rgba(94, 94, 94, 0.8);
+  border-radius: 12px;
+  margin: 0 auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  .logoQr{
+    width: 50px;
+    height: 50px;
+  }
+  h4{
+    font-weight: 550;
+    font-size: 1.5rem;
+    color: black;
+  }
+}

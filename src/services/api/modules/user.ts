@@ -38,6 +38,9 @@ export default {
      updateProfile:async (newInfor: any) => {
         return await axios.post(import.meta.env.VITE_SERVER_HOST_API + "users/updateProfile", newInfor)
      },
+     resendEmail: async () => {
+        return await axios.get(import.meta.env.VITE_SERVER_HOST_API + "users/resend-email")
+    },
 
 }
 

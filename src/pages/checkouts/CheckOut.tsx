@@ -106,7 +106,7 @@ export default function CheckOut() {
   return (
 
     <>
-      <div>
+      <div className='checkout-container'>
         <div className="banner-container">
           <div className="bannerProducts"></div>
           <div className="bannerProducts-over"></div>
@@ -119,8 +119,13 @@ export default function CheckOut() {
           userStore.cartPayQr &&
           <div className='qrContainer'>
             <div className='qrContainer-chirld'>
+              <img src="https://firebasestorage.googleapis.com/v0/b/md05furniturestore.appspot.com/o/test%2F1622682588188_zalopay.png?alt=media&token=c19747fb-58b0-4961-ba04-d0a9a9c7bdb1&_gl=1*1l56kpl*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NjI1NjY4NS41Mi4xLjE2OTYyNTY3NTUuNjAuMC4w" alt="" />
+                <img className='logoQr' src="https://firebasestorage.googleapis.com/v0/b/md05furniturestore.appspot.com/o/test%2Flogo.png?alt=media&token=0906f3f7-8eb1-4113-af95-e6ca135af6da&_gl=1*yw45s0*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NjA2Nzk2NC40OC4xLjE2OTYwNjk1MDYuNTMuMC4w" alt="" />
               <QRCode value={userStore.cartPayQr} icon='https://cafebiz.cafebizcdn.vn/thumb_w/600/162123310254002176/2022/7/9/photo1657324993775-1657324993859181735127.jpg' />
+              <p>Awaiting payment.....</p>
+              <h4>Scan to Pay</h4>
             </div>
+
           </div>
         }
         <div className="row-checkout">

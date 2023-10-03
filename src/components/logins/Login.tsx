@@ -114,7 +114,8 @@ const LoginSignin = (props: Props) => {
             className : "custom-message"})
             setLoading(false)
           }else{
-            message.warning("Username or Email is already exist")
+            message.warning({content:"Username or Email is already exist",
+              className : "custom-message"})
             setLoading(false)
           }
 

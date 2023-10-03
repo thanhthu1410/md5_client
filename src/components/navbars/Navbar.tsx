@@ -67,7 +67,7 @@ export default function Navbar() {
                 </p>
             </div>
             <div className='nav-bt'>
-                <div className='logo'><img src="https://firebasestorage.googleapis.com/v0/b/md05furniturestore.appspot.com/o/test%2Flogo.png?alt=media&token=0906f3f7-8eb1-4113-af95-e6ca135af6da&_gl=1*yw45s0*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NjA2Nzk2NC40OC4xLjE2OTYwNjk1MDYuNTMuMC4w" alt="" /></div>
+                <div className='logo'><img src="https://firebasestorage.googleapis.com/v0/b/md05furniturestore.appspot.com/o/test%2Flogo1.jpg?alt=media&token=9a98413d-b9d9-4506-bd3c-a414046dcf06&_gl=1*1ewf5zf*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NjMwMzMyMC41My4xLjE2OTYzMDM0OTQuNTEuMC4w" alt="" /></div>
                 <div className='nav-title'>
                     <p onClick={()=>navigate("/")}>{t('home')}</p>
                     <p onClick={()=>navigate("/shop/1")}>{t('shop')}</p>

@@ -112,8 +112,11 @@ function Example() {
                                             console.log("e", e.target.files);
                                             setUpAvatar(e.target.files);
                                         }} className='input_btn' />
-                                        {loading ? <button> <span className='loading-spinner changeAva'></span></button>  : <button className='changeAva' onClick={()=>updateAvatar()}>Change Avatar</button> }
-                                       
+                                        <button onClick={()=>updateAvatar()} className='changeAva'>
+                                            {loading ? <span className='loading-spinner'></span>: "Change Avatar" }
+                                        </button>
+                                        {/* {loading ? <button> <span className='loading-spinner changeAva'></span></button>  : <button className='changeAva' onClick={()=>updateAvatar()}>Change Avatar</button> } */}
+
                                     </div>
                         <form  onSubmit={(e) => {
                                 update(e)

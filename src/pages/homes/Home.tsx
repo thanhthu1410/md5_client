@@ -55,7 +55,12 @@ export default function Home() {
           }
         })
         socket.on("connectStatus", (data: { status: boolean, message: string }) => {
-          console.log(data.message)
+          if (data.status) {
+            console.log(data.message)
+          } else {
+            localStorage.removeItem("token");
+            console.log(data.message)
+          }
         })
         socket.on("disconnect", () => {
           dispatch(userAction.setLoginData(null))
@@ -63,8 +68,6 @@ export default function Home() {
         socket.on("receiveUserData", (user: User) => {
                     console.log("userStore",user);
           dispatch(userAction.setLoginData(user))
-
-          
         })
         socket.on("receiveReceipt", (receipts: Receipt[]) => {
           dispatch(userAction.setReceipt(receipts))

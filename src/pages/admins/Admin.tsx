@@ -22,7 +22,7 @@ export default function Admin() {
      
         <div className="sidebar">
           <div className="logo">
-            {/* <img src="img/logo.png" alt="logo" /> */}
+            <img src="https://firebasestorage.googleapis.com/v0/b/md05furniturestore.appspot.com/o/test%2Flogo1.jpg?alt=media&token=9a98413d-b9d9-4506-bd3c-a414046dcf06&_gl=1*1ewf5zf*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NjMwMzMyMC41My4xLjE2OTYzMDM0OTQuNTEuMC4w" alt="logo" />
             <h2>FURNITURE</h2>
           </div>
           <ul className="links">

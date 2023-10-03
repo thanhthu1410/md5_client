@@ -15,9 +15,11 @@ export default function Dropdown() {
     const dispatch = useDispatch()
    function hanldeLogOut(){
     localStorage.removeItem('token');
-    userStore.socket?.disconnect()
- 
-   
+    userStore.socket?.disconnect();
+    dispatch(userAction.setCart(null));
+    dispatch(userAction.setReceipt(null));
+    dispatch(userAction.setSocket(null));
+    dispatch(userAction.setLoginData(null));
    }
  
     
@@ -66,7 +68,7 @@ export default function Dropdown() {
                   
                </li>
                <li>
-                   <Link className="dropdown-item" to={"/receipt"}>
+                   <Link className="dropdown-item" to={"/user-receipt"}>
                        {t("purchaseHistory")}
                    </Link>
                </li>
