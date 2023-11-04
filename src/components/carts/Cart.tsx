@@ -41,7 +41,9 @@ function OffCanvasExample({ name, placement }: OffCanvasExampleProps) {
   const guestCartStore = useSelector((store: StoreType) => {
     return store.guestCartStore
   })
-
+  const gestSubtotal = guestCartStore.cart?.reduce((value, current) => {
+    return value + current.quantity * current.option.product.price
+  }, 0)
 
   useEffect(() => {
     console.log("guestCartStore", guestCartStore)
@@ -88,7 +90,7 @@ function OffCanvasExample({ name, placement }: OffCanvasExampleProps) {
                 </div>
                 <div className='total-container'>
                   <p>{t("freeship")}</p>
-                  <p className='total'>SubTotal :  {formatter.format(Number(subTotal))}</p>
+                  <p className='total'>SubTotal :  {formatter.format(Number(userStore.data !== null ? subTotal : gestSubtotal))}</p>
 
                 </div>
                 <button className='checkout-btn' onClick={() => { navigate("/checkout"); handleClose() }}>Check Out</button>

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreType } from '@/stores';
 import { ReceiptDetail } from '@/stores/slice/user';
 import axios from 'axios';
-import { guestCartActions } from '@/stores/slice/guestCart.slice';
+import { CartItemType, guestCartActions } from '@/stores/slice/guestCart.slice';
 interface Product {
   id: string;
   name: string;
@@ -149,6 +149,9 @@ export default function CheckOut() {
   }, 0)
 
   console.log("totalProduct", totalProduct);
+  const gestSubtotal = guestCartStore.cart?.reduce((value, current) => {
+    return value + current.quantity * current.option.product.price
+  }, 0)
 
 
   useEffect(() => {
@@ -327,18 +330,25 @@ export default function CheckOut() {
                 </span>
               </h4>
 
-              {userStore.cart?.detail.map((item: ReceiptDetail) => (
+              {  userStore.data !== null ?  userStore.cart?.detail.map((item: ReceiptDetail) => (
                 <p className='item-cart-checkout'>
                   <span>{item.option.product.name}{`(${item.quantity})`}</span> <span>{formatter.format(Number(item.option.product.price))}</span>
                 </p>
-              ))}
+              ))
+            :
+            guestCartStore.cart?.map((item: CartItemType) => (
+              <p className='item-cart-checkout'>
+                <span>{item.option.product.name}{`(${item.quantity})`}</span> <span>{formatter.format(Number(item.option.product.price))}</span>
+              </p>
+            ))
+            }
 
 
               <hr />
               <p>
                 Total{" "}
                 <span className="price" style={{ color: "black" }}>
-                  <b>{formatter.format(Number(subTotal))}</b>
+                  <b>{ userStore.data !== null ?  formatter.format(Number(subTotal)) : formatter.format(Number(gestSubtotal))}</b>
 
                 </span>
               </p>

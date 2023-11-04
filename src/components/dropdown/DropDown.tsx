@@ -77,6 +77,12 @@ export default function Dropdown() {
                        {t("userProfile")}
                    </Link>
                </li>
+               {userStore.data.role == "ADMIN" ?  <li>
+                   <Link className="dropdown-item" to={"/admin"}>
+                       {t("admin")}
+                   </Link>
+               </li> : <></>}
+
               
                
            </ul>}

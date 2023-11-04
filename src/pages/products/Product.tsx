@@ -105,6 +105,7 @@ export default function Product() {
       if (findResult) {
           findResult.quantity += quantity
           localStorage.setItem("cart", JSON.stringify(cart))
+          message.success("Add to Cart Successfull !")
       } else {
           cart.push({
               option: {
@@ -116,6 +117,7 @@ export default function Product() {
               },
               quantity: 1,
           })
+          message.success("Add to Cart Successfull !")
           localStorage.setItem("cart", JSON.stringify(cart))
       }
       dispatch(guestCartActions.setCart(cart))

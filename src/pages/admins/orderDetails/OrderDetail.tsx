@@ -13,6 +13,7 @@ interface Product {
     categoryId: number,
     categoryName: string,
     updateAt: Date
+    productOptions: any[]
 }
 
 interface OrderItem {

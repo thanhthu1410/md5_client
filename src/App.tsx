@@ -37,7 +37,9 @@ export default function App() {
     api.categories.findMany()
     .then(res => {
       if(res.status == 200){
-          dispatch(categoryAction.setData(res.data.data))
+          dispatch(categoryAction.setData(res.data.data));
+          console.log("rescategories",res);
+          
       }
     })
   },[])

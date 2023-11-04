@@ -2,6 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface Product {
+    productOptions: any;
     id: string;
     avatar: string;
     name: string;

@@ -13,14 +13,14 @@
 .otpForm {
    
     .otpVerify-button {
-        background: rgb(167, 185, 138);;
+        background: rgb(8, 8, 8);;
         color: #fff;
         padding: 7px 15px;
         margin-top: 20px;
         border-radius: 4px;
 
         &:hover {
-            background-color:rgb(127, 173, 57);;
+            background-color:rgb(7, 7, 6);;
         }
     }
 }
@@ -32,7 +32,7 @@
     // margin-top: 100px !important;
     width: 100%;
     height: 90vh;
-    background-image: linear-gradient(rgb(255, 255, 255), rgb(159, 201, 147));
+    background-image: linear-gradient(rgb(255, 254, 254), rgb(166, 168, 166));
     padding: 30px 65px;
     // border-radius: 12px;
     row-gap: 20px;
@@ -48,17 +48,17 @@
         height: 350px;
         width: 40%;
         background-color: #fff;
-        opacity: 0.8;
+        opacity: 0.9;
         border-radius: 10px;
-        header {
-            height: 65px;
-            width: 65px;
-            background: rgb(127, 173, 57);;
-            color: #fff;
-            font-size: 2.5rem;
-            border-radius: 50%;
-            margin: 0 0 20px 0;
-        }
+        // header {
+        //     height: 100px;
+        //     width: 80px;
+        //     background-image:url("https://firebasestorage.googleapis.com/v0/b/md05furniturestore.appspot.com/o/test%2Flogo1.jpg?alt=media&token=9a98413d-b9d9-4506-bd3c-a414046dcf06&_gl=1*1ewf5zf*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NjMwMzMyMC41My4xLjE2OTYzMDM0OTQuNTEuMC4w");;
+        //     color: #fff;
+        //     font-size: 2.5rem;
+        //     // border-radius: 50%;
+        //     margin: 0 0 20px 0;
+        // }
     }
 }
 

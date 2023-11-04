@@ -145,6 +145,7 @@ const LoginSignin = (props: Props) => {
         })
         
         localStorage.setItem("token",res.data.token);
+        localStorage.removeItem("cart")
         dispatch(userAction.reload())
         
         setTimeout(()=>{

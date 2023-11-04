@@ -12,7 +12,8 @@ interface Order {
     phoneNumber: string,
     address: string,
     state: string,
-    createAt: Date
+    createAt: Date,
+    payMode: string
 }
 
 export default function Order() {
@@ -89,7 +90,9 @@ export default function Order() {
                 <thead>
                     <tr>
                         <th scope="col">Receipt ID</th>
-                        <th scope="col">Customer</th>
+                        {/* <th scope="col">Customer</th> */}
+                       
+                        {/* <th scope="col">PayMode</th> */}
                         <th scope="col">Total</th>
                         <th scope="col">Status</th>
                         <th scope="col">Created</th>
@@ -105,7 +108,7 @@ export default function Order() {
                     </div> : orders?.map((order, index) => (
                         <tr key={Math.random() * Date.now()} className='order'>
                             <td>{order.id}</td>
-                            <td>{order.user.user_name}</td>
+                            {/* <td>{order.payMode}</td> */}
                             <td>{order.total}</td>
                             <td  className='optionState' onClick={(e) => {
                                 if(order.status == "DONE") return

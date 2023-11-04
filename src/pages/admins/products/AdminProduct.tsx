@@ -35,7 +35,6 @@ export default function AdminProduct() {
   const [maxItemPage, setMaxItemPage] = useState(8);
   const [skipItem, setSkipItem] = useState(0);
   const [maxPage, setMaxPage] = useState<any[]>([]);
-  const [listProduct, setListProduct] = useState([])
   const [isLoading, setIsLoading] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [productData, setProductData] = useState(null);

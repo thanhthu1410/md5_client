@@ -37,23 +37,23 @@ export default function UserOrderDetail() {
     const [productVisible, setProductVisible] = useState(false);
     const [guestInformation, setGuestInformation] = useState(null);
 
-    useEffect(() => {
-        if (orderId) {
-            setIsLoading(true);
-            api.purchaseApi.findById(orderId)
-                .then(res => {
-                    if (res.status === 200) {
-                        // console.log(res.data.data)
-                        setGuestInformation(res.data.data)
-                        // console.log("guestReceiptDetail", guestReceiptDetail)
-                        setGuestReceiptDetail(res.data.data.guestReceiptDetail);
-                    }
-                })
-                .finally(() => {
-                    setIsLoading(false);
-                });
-        }
-    }, [orderId]);
+    // useEffect(() => {
+    //     if (orderId) {
+    //         setIsLoading(true);
+    //         api.purchaseApi.findById(orderId)
+    //             .then(res => {
+    //                 if (res.status === 200) {
+    //                     // console.log(res.data.data)
+    //                     setGuestInformation(res.data.data)
+    //                     // console.log("guestReceiptDetail", guestReceiptDetail)
+    //                     setGuestReceiptDetail(res.data.data.guestReceiptDetail);
+    //                 }
+    //             })
+    //             .finally(() => {
+    //                 setIsLoading(false);
+    //             });
+    //     }
+    // }, [orderId]);
 
   return (
     <div className='orderDetail-wrapper'>

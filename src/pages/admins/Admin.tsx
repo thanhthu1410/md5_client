@@ -29,7 +29,7 @@ export default function Admin() {
           <h4 onClick={()=> window.location.href = "/"}>HomePage </h4>
             
             <hr />
-            <h4>Products </h4>
+            <h4>Manage Products </h4>
             <li>
               <span className="material-symbols-outlined">dashboard</span>
               <Link to={"/admin"}>List Products</Link>
@@ -47,10 +47,10 @@ export default function Admin() {
             <hr />
            
             <hr />
-            <h4>Purchase History</h4>
+            <h4>Manage Receipts </h4>
             <li>
               <span className="material-symbols-outlined">ambient_screen</span>
-              <Link to={"/admin/receipt"}>Manage Receipts</Link>
+              <Link to={"/admin/receipt"}>Purchase</Link>
             </li>
             {/* <li>
               <span className="material-symbols-outlined">ambient_screen</span>

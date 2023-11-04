@@ -54,7 +54,7 @@ export default function ProfilePage() {
   }, [email]);
   async function resendEmail() {
     api.users.resendEmail()
-    .then(res => message.success("Check your email"))
+    .then(res => message.success("Please Check Your Email - "))
     .catch(err => console.log("err",err))
     
 }

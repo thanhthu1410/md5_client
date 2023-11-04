@@ -111,7 +111,8 @@ function OffCanvasExample({ name, placement }: OffCanvasExampleProps) {
            
           </div>
           <div className='container_search'>
-            {searchStatus ? <div className="d-flex justify-content-center loading-wrapper">
+            {searchStatus ?
+             <div className="d-flex justify-content-center loading-wrapper">
               <div className="spinner-border" role="status">
                 <span className="visually-hidden">Loading...</span>
               </div>
